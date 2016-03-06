@@ -3,10 +3,10 @@
 @include('errors.form_errors')
 <h1>
     <div style="text-align:left">
-        Adjudicators
+        Feedback {{ $round->name }}
         <div style="float:right">
-            {{ link_to('adjudicators/create', 'Add new', ['class' => 'btn btn-primary']) }}    
-            {{ link_to('adjudicators/import_csv', 'Import .csv', ['class' => 'btn btn-primary']) }}    
+            {!! link_to('feedbacks/' . $round->id . '/create',
+            'Add new', ['class' => 'btn btn-primary']) !!}    
         </div>
     </div>
 </h1>
@@ -22,22 +22,26 @@
             @endforeach
         </tr>
     </thead>
-    @foreach ($values as $value)
+
+    @foreach ($feedbacks as $feedback)
         <tr>
             <td>
-                {{ $value->name }}
+                {{ $feedback->type_name }}
             </td>
             <td>
-                {{ $value->test_score}}
+                {{ $feedback->evaluatee_name }}
             </td>
             <td>
-                {{ $value->total_score }}
+                {{ $feedback->evaluator_name }}
             </td>
             <td>
-                {{ $value->active}}
+                {{ $feedback->score }}
             </td>
             <td>
-                {{ Form::open(['method' => 'DELETE', 'url' => ['adjudicators', $value->id]]) }}
+                {{ link_to('feedbacks/' . "$round->id/$feedback->id" . '/edit', 'Edit', ['class' => 'btn btn-primary']) }}
+            </td>
+            <td>
+                {{ Form::open(['method' => 'DELETE', 'url' => ['feedback', $feedback->id]]) }}
                 {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
                 {{ Form::close() }}
             </td>

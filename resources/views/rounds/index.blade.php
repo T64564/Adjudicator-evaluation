@@ -2,10 +2,12 @@
 @section('content')
 <h1>
     <div style="text-align:left">
-Rounds
+        Rounds
         <div style="float:right">
-            {!! link_to('rounds/create', 'Add new', ['class' => 'btn btn-primary']) !!}    
-            {!! link_to('rounds/import', 'Import .csv', ['class' => 'btn btn-primary']) !!}    
+            {!! link_to('rounds/create', 'Add new', 
+            ['class' => 'btn btn-primary']) !!}    
+            {!! link_to('rounds/import', 'Import .csv', 
+            ['class' => 'btn btn-primary']) !!}    
         </div>
     </div>
 </h1>
@@ -24,7 +26,7 @@ Rounds
     @foreach ($values as $value)
         <tr>
             <td>
-                {{ $value->name }}
+                {{ link_to('rounds/' . $value->id . '/edit', $value->name) }}
             </td>
             <td>
                 {{ $value->silent}}

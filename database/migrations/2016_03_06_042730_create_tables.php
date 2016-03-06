@@ -16,36 +16,39 @@ class CreateTables extends Migration
             $table->increments('id');
             $table->String('name')->unique();
             $table->float('test_score')->default(0);
-            $table->boolean('active')->default(true);
+            $table->boolean('active');
             $table->timestamps();
         });
 
         Schema::create('teams', function (Blueprint $table) {
             $table->increments('id');
             $table->String('name')->unique();
-            $table->boolean('active')->default(true);
+            $table->boolean('active');
             $table->timestamps();
         });
 
         Schema::create('rounds', function (Blueprint $table) {
             $table->increments('id');
             $table->String('name')->unique();
-            $table->boolean('silent')->default(true);
+            $table->boolean('silent');
             $table->timestamps();
         });
 
         Schema::create('feedbacks', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('type');
-            $table->integer('round_id');
-            $table->integer('evaluatee_id');
-            $table->integer('evaluator_id');
+            $table->integer('round_id')->unsigned();
+            $table->integer('evaluatee_id')->unsigned();
+            $table->integer('evaluator_id')->unsigned();
             $table->double('score');
             $table->timestamps();
 
             $table->unique([
-                'round_id', 'evaluatee_id', 'evaluator_id'
+                'type', 'round_id', 'evaluatee_id', 'evaluator_id'
             ]);
+
+            $table->foreign('round_id')->references('id')->on('rounds');
+            $table->foreign('evaluatee_id')->references('id')->on('adjudicators');
         });
     }
 

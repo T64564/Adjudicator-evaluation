@@ -12,4 +12,17 @@ class Team extends Model
         $tableHeader = ['Name', 'Active'];
         return $tableHeader;
     }
+
+    /*
+     * id => name
+     */
+    public static function getNamesForSelectbox() {
+        $names = [];
+        $teams = Team::get();
+
+        foreach ($teams as $team) {
+            $names[$team->id] = $team->name;
+        }
+        return $names;
+    }
 }

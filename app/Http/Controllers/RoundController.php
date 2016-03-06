@@ -21,13 +21,26 @@ class RoundController extends Controller {
     }
 
     public function store(Request $request) {
-        \Debugbar::info($request);
         $this->validateRequest($request);
-        return 'A';
         Round::create($request->all());
         $name = $request->name;
 
-        \Session::flash('flash_message', "Create an $name.");
+        \Session::flash('flash_message', "Create $name.");
+        return redirect()->route('rounds.index');
+    }
+
+    public function edit(Round $round) {
+        return view('rounds.edit', compact('round'));
+    }
+
+    public function update(Request $request) {
+        $this->validateRequest($request);
+        $round = Round::findOrFail($request->id);
+        
+        $round->update($request->all());
+        $name = $request->name;
+
+        \Session::flash('flash_message', "Update $name.");
         return redirect()->route('rounds.index');
     }
 
@@ -43,6 +56,7 @@ class RoundController extends Controller {
                 $rules[$key] .= $id;
             }
         }
+        \Debugbar::info($request->all());
         $this->validate($request, $rules);
     }
 }

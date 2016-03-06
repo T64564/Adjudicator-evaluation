@@ -10,14 +10,15 @@
         </button>
     </div>
 
-    <!-- メニュー -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <!-- 左寄せメニュー -->
         <ul class="nav navbar-nav">
-            <!-- ドロップダウンメニュー -->
+            <li>
+                {!! link_to_route('feedbacks.index', 'Feedback') !!}
+            </li>
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    Results
+                <a href="#" class="dropdown-toggle" 
+                    data-toggle="dropdown" role="button" aria-expanded="false">
+                    Control Panel
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">

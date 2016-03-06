@@ -11,7 +11,20 @@ class Adjudicator extends Model
     public $total_score = 1.2;
 
     public static function getTableHeader() {
-        $tableHeader = ['Name', 'Test score', 'Total score', 'Active'];
+        $tableHeader = ['Name', 'Test score', 'Total score', 'Active', 'Delete'];
         return $tableHeader;
+    }
+
+    /*
+     * id => name
+     */
+    public static function getNamesForSelectbox() {
+        $names = [];
+        $teams = Adjudicator::get();
+
+        foreach ($teams as $team) {
+            $names[$team->id] = $team->name;
+        }
+        return $names;
     }
 }
