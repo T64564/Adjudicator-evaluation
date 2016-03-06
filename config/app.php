@@ -156,6 +156,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Collective\Html\HtmlServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*
@@ -202,6 +204,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
+        'Form' => Collective\Html\FormFacade::class,  // 追加
+        'Html' => Collective\Html\HtmlFacade::class,  // 追加
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Input'     => Illuminate\Support\Facades\Input::class,
     ],
 
 ];

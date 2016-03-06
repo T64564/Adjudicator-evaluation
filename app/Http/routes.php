@@ -28,4 +28,18 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web']], function () {
     //
+
+Route::get('adjudicators/import_csv',
+    ['as' => 'adjudicators.import_csv', 'uses' => 'AdjudicatorController@getImport']);
+Route::post('adjudicators/import_csv',
+    ['as' => 'adjudicators.import_csv', 'uses' => 'AdjudicatorController@postImport']);
+
+Route::get('teams/import_csv',
+    ['as' => 'teams.import_csv', 'uses' => 'TeamController@getImport']);
+Route::post('teams/import_csv',
+    ['as' => 'teams.import_csv', 'uses' => 'TeamController@postImport']);
+
+Route::resource('adjudicators', 'AdjudicatorController');
+Route::resource('teams', 'TeamController');
+Route::resource('rounds', 'RoundController');
 });
