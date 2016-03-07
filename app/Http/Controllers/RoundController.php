@@ -44,6 +44,9 @@ class RoundController extends Controller {
         return redirect()->route('rounds.index');
     }
 
+    public function destroy(Round $round) {
+    }
+
     public function validateRequest($request) {
         $id = ($request->has('id')) ? ',' . $request->input('id') : '';
         $rules = config('validations.rounds');
@@ -56,7 +59,6 @@ class RoundController extends Controller {
                 $rules[$key] .= $id;
             }
         }
-        \Debugbar::info($request->all());
         $this->validate($request, $rules);
     }
 }

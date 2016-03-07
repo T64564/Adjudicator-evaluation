@@ -5,8 +5,12 @@
     Adjudicator Ranking
 </h1>
 <hr />
-
-<table class="table table-striped table-hover">
+<script type="text/javascript">
+window.onload = function() {
+        $("#table").tablesorter(); 
+}
+</script>
+<table id='table' class="table table-striped table-hover">
     <thead>
         <tr>
             <th>

@@ -56,7 +56,6 @@ class FeedbackController extends Controller {
         $types = Feedback::getTypes();
         $adj_names = Adjudicator::getNamesForSelectBox();
         $team_names = Team::getNamesForSelectBox();
-        \Debugbar::info($feedback->toArray());
         return view('feedbacks.edit', 
             compact('round', 'feedback', 'types', 'adj_names', 'team_names'));
     }

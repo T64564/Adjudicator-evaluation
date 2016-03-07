@@ -36,7 +36,8 @@
                 'Edit', ['class' => 'btn btn-primary']) }}
             </td>
             <td>
-                {{ Form::open(['method' => 'DELETE', 'url' => ['adjudicators', $round->id]]) }}
+                {{ Form::open(['method' => 'DELETE', 
+                'url' => ['adjudicators', $round->id]]) }}
                 {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
                 {{ Form::close() }}
             </td>

@@ -3,10 +3,12 @@
 @include('errors.form_errors')
 <h1>
     <div style="text-align:left">
-       Teams 
+        Teams 
         <div style="float:right">
-            {!! link_to('teams/create', 'Add new', ['class' => 'btn btn-primary']) !!}    
-            {!! link_to('teams/import_csv', 'Import.csv', ['class' => 'btn btn-primary']) !!}    
+            {!! link_to('teams/create',
+            'Add new', ['class' => 'btn btn-primary']) !!}    
+            {!! link_to('teams/import_csv', 
+            'Import.csv', ['class' => 'btn btn-primary']) !!}    
         </div>
     </div>
 </h1>
@@ -35,7 +37,8 @@
                 'Edit', ['class' => 'btn btn-primary']) }}
             </td>
             <td>
-                {{ Form::open(['method' => 'DELETE', 'url' => ['adjudicators', $team->id]]) }}
+                {{ Form::open(['method' => 'DELETE', 
+                'url' => ['adjudicators', $team->id]]) }}
                 {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
                 {{ Form::close() }}
             </td>

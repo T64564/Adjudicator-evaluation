@@ -12,8 +12,9 @@ class AdjudicatorController extends Controller {
 
     public function index() {
         $heads = Adjudicator::getTableHeader();
-        $adjudicators = Adjudicator::get();
-        return view('adjudicators.index', compact('heads', 'adjudicators'));
+        $adjs = Adjudicator::get();
+        $rules = config('validations.adjudicators');
+        return view('adjudicators.index', compact('heads', 'adjs'));
     }
 
     public function show() {
@@ -21,16 +22,34 @@ class AdjudicatorController extends Controller {
     }
 
     public function create() {
-        return 'CREATE';
+        return view('adjudicators.create');
     }
 
-    public function store() {
+    public function store(Request $request) {
+        $this->validateRequest($request);
+        Adjudicator::create($request->all());
+        $name = $request->name;
+
+        \Session::flash('flash_message', "Create $name.");
+        return redirect()->route('adjudicators');
     }
 
-    public function edit() {
+    public function edit(Adjudicator $adj) {
+        return view('adjudicators.edit', compact('adj'));
     }
 
-    public function update() {
+    public function update(Request $request) {
+        $this->validateRequest($request);
+        // \Debugbar::info($request->all());
+        // \Debugbar::info(config('validations.adjudicators'));
+        // return 'A';
+        $adj = Adjudicator::findOrFail($request->id);
+        
+        $adj->update($request->all());
+        $name = $request->name;
+
+        \Session::flash('flash_message', "Update $name.");
+        return redirect()->route('adjudicators.index');
     }
 
     public function destroy() {
@@ -55,7 +74,6 @@ class AdjudicatorController extends Controller {
         if (\Request('name_dep') === 'update') {
             $update = true;
         }
-        \Debugbar::info(\Request::all());
         $model = new Adjudicator();
         $fillable = $model->getFillable();
 
@@ -66,5 +84,26 @@ class AdjudicatorController extends Controller {
             \Session::flash('flash_message', "File uploaded successfully.");
         }
         return view('adjudicators.import_csv')->withErrors($errors);
+    }
+
+    public function validateRequest($request) {
+        $id = ($request->has('id')) ? ',' . $request->input('id') : '';
+        // $rules = config('validations.adjudicators');
+        $rules = [
+            'name' => 'required|unique:adjudicators,name',
+            'test_score' => 'required|numeric|between:0,10',
+            'active' => 'required|boolean',
+        ];
+
+        foreach ($rules as $key => $rule) {
+            if (preg_match('/.*boolean.*/', $rule)) {
+                $request->merge([$key => $request->has($key)]);
+            }
+            if (preg_match('/.*unique.*/', $rule)) {
+                $rules[$key] .= $id;
+            }
+        }
+        \Debugbar::info($rules);
+        $this->validate($request, $rules);
     }
 }

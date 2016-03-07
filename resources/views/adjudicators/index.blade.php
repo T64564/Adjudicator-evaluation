@@ -5,8 +5,10 @@
     <div style="text-align:left">
         Adjudicators
         <div style="float:right">
-            {{ link_to('adjudicators/create', 'Add new', ['class' => 'btn btn-primary']) }}    
-            {{ link_to('adjudicators/import_csv', 'Import .csv', ['class' => 'btn btn-primary']) }}    
+            {{ link_to('adjudicators/create',
+            'Add new', ['class' => 'btn btn-primary']) }}    
+            {{ link_to('adjudicators/import_csv',
+            'Import .csv', ['class' => 'btn btn-primary']) }}    
         </div>
     </div>
 </h1>
@@ -22,26 +24,24 @@
             @endforeach
         </tr>
     </thead>
-    @foreach ($adjudicators as $adjudicator)
+    @foreach ($adjs as $adj)
         <tr>
             <td>
-                {{ $adjudicator->name }}
+                {{ $adj->name }}
             </td>
             <td>
-                {{ $adjudicator->test_score}}
+                {{ $adj->test_score}}
             </td>
             <td>
-                {{ $adjudicator->total_score }}
+                {{ $adj->active}}
             </td>
             <td>
-                {{ $adjudicator->active}}
-            </td>
-            <td>
-                {{ link_to('adjudicators/' . $adjudicator->id . '/edit', 
+                {{ link_to('adjudicators/' . $adj->id . '/edit', 
                 'Edit', ['class' => 'btn btn-primary']) }}
             </td>
             <td>
-                {{ Form::open(['method' => 'DELETE', 'url' => ['adjudicators', $adjudicator->id]]) }}
+                {{ Form::open(['method' => 'DELETE', 
+                'url' => ['adjudicators', $adj->id]]) }}
                 {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
                 {{ Form::close() }}
             </td>

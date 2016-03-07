@@ -8,7 +8,8 @@
     {{ Form::label('type', 'Type:') }}
     {{ Form::select('type', $types,
     null,
-    ['class' => 'form-control', 'onchange' => 'updateEvaluator(this.value)']) }}
+    ['id' => 'type', 'class' => 'form-control', 
+    'onchange' => 'updateEvaluator(this.value)']) }}
 </div>
 <div class="form-group">
     {{ Form::label('evaluatee_name', 'Evaluatee:') }}
@@ -33,9 +34,13 @@
     ['class' => 'btn btn-primary form-control']) }}
 </div>
 
-<script>
+<script type="text/javascript">
 var team_names = JSON.parse('<?php echo json_encode($team_names) ?>');
 var adj_names = JSON.parse('<?php echo json_encode($adj_names) ?>');
+
+window.onload = function() {
+    updateEvaluator($('#type').val());
+}
 
 function updateEvaluator(value) {
     $('[name = evaluator_id]').children('option').remove();
@@ -44,12 +49,16 @@ function updateEvaluator(value) {
         var keys = Object.keys(team_names);
         for (var key in team_names) {
             console.log(team_names[key]);
-            $('[name = evaluator_id]').append($('<option value=' + key + '>' + team_names[key] + '</option>'));
+            $('[name = evaluator_id]').
+                append($('<option value=' + key + '>' 
+                            + team_names[key] + '</option>'));
         }
     } else {
         for (var key in adj_names) {
             console.log(adj_names[key]);
-            $('[name = evaluator_id]').append($('<option value=' + key + '>' + adj_names[key] + '</option>'));
+            $('[name = evaluator_id]').
+                append($('<option value=' + key + '>' 
+                            + adj_names[key] + '</option>'));
         }
     }
 }

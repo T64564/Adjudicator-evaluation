@@ -6,14 +6,15 @@ namespace App\Http\Models;
  * Feedback Score Ranking
  */
 class Ranking {
-    /*
+    public $test_scores;
+
+    /**
      * adjudicator_id =>
      *      round_id(unsiged int)    => average score of the round
      *      'round'                  => average of average scores of each round
      *      'feedback'               => average score of each feedback
      *
      */
-    public $test_scores;
     public $averages;
 
     public function __construct() {
@@ -38,15 +39,16 @@ class Ranking {
                 $avg = \DB::table('feedbacks')->where('round_id', $round->id)
                     ->where('evaluatee_id', $adjudicator->id)->avg('score');
 
-                $this->averages[$adjudicator->id][$round->id] =
-                    isset($avg) ? $avg : 0;
+                $this->averages[$adjudicator->id][$round->id] = $avg;
             }
 
             $sum = 0; 
             $count = 0;
-            foreach ($this->averages[$adjudicator->id] as $ave) {
-                $sum += $ave;
-                $count++;
+            foreach ($this->averages[$adjudicator->id] as $avg) {
+                if (isset($avg)) {
+                    $sum += $avg;
+                    $count++;
+                }
             } 
             $sum += $this->test_scores[$adjudicator->id];
             $count++;
