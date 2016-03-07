@@ -75,7 +75,6 @@ class TeamController extends Controller {
         if (\Request('name_dep') === 'update') {
             $update = true;
         }
-        \Debugbar::info(\Request::all());
         $model = new Team();
         $fillable = $model->getFillable();
 

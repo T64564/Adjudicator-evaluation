@@ -21,14 +21,11 @@ function importCsv($fileName, $modelName, $fillable, $update = false) {
         return false;
     } 
 
-    \Debugbar::info($fillable);
     /*
      * 初めの行はfillableな属性名
      */
     if (($row = fgetcsv($handle, 1000, $delimiter)) !== false) {
-            \Debugbar::info(count($row));
         for ($i = 0; $i < count($row); $i++) {
-            \Debugbar::info($row[$i]);
             if ($row[$i] !== $fillable[$i]) {
                 $errors[] = 'The first line must be ' 
                     . implode($fillable, ', ') . '.';
@@ -42,8 +39,6 @@ function importCsv($fileName, $modelName, $fillable, $update = false) {
     $rules = config('validations.' . mb_strtolower($modelName) . 's');
     $uniqueKeys = []; /* validationにuniqueが含まれているkey */
 
-    \Debugbar::info($modelName . 's');
-    \Debugbar::info($rules);
     foreach ($rules as $key => $rule) {
         if (preg_match('/.*unique.*/', $rule)) {
             $uniqueKeys[] = $key;

@@ -39,7 +39,8 @@
                 {{ $feedback->score }}
             </td>
             <td>
-                {{ link_to('feedbacks/' . "$round->id/$feedback->id" . '/edit', 'Edit', ['class' => 'btn btn-primary']) }}
+                {{ link_to('feedbacks/' . "$round->id/$feedback->id" . '/edit',
+                'Edit', ['class' => 'btn btn-primary']) }}
             </td>
             <td>
                 {{ Form::open(['method' => 'DELETE', 'url' => ['feedbacks', $round->id, $feedback->id]]) }}

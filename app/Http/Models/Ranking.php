@@ -20,7 +20,6 @@ class Ranking {
     public function __construct() {
         $this->fillTestScores();
         $this->fillAverages();
-        \Debugbar::info($this->averages);
     }
 
     private function fillTestScores() {

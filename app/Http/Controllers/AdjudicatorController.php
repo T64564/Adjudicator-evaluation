@@ -40,9 +40,6 @@ class AdjudicatorController extends Controller {
 
     public function update(Request $request) {
         $this->validateRequest($request);
-        // \Debugbar::info($request->all());
-        // \Debugbar::info(config('validations.adjudicators'));
-        // return 'A';
         $adj = Adjudicator::findOrFail($request->id);
         
         $adj->update($request->all());
@@ -93,7 +90,6 @@ class AdjudicatorController extends Controller {
 
     public function validateRequest($request) {
         $id = ($request->has('id')) ? ',' . $request->input('id') : '';
-        // $rules = config('validations.adjudicators');
         $rules = [
             'name' => 'required|unique:adjudicators,name',
             'test_score' => 'required|numeric|between:0,10',
@@ -108,7 +104,6 @@ class AdjudicatorController extends Controller {
                 $rules[$key] .= $id;
             }
         }
-        \Debugbar::info($rules);
         $this->validate($request, $rules);
     }
 }
