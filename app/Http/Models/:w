@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Http\Models;
+
+/*
+ * Feedback Score Ranking
+ */
+class Ranking {
+    /*
+     * adjudicator_id =>
+     *      round_id(unsiged int)    => average score of the round
+     *      'round'                  => average of average scores of each round
+     *      'feedback'               => average score of each feedback
+     *
+     */
+    public $averages;
+
+    public function __construct() {
+        $this->fillAverages();
+
+    }
+
+    private function fillAverages() {
+        $adjudicators = Adjudicator::get();
+        $rounds = Round::get();
+
+        foreach ($adjudicators as $adjudicator) {
+            foreach ($rounds as $round) {
+                    $avg = \DB::table('feedbacks')->where('round_id', $round->id)
+                    ->where('evaluatee_id', $adjudicator->id)->avg('score');
+
+                    $this->averages[$adjudicator->id][$round->id] =
+                        isset($avg) ? $avg : 0;
+                    // Feedback::where('round_id', $round->id)
+                    // ->where('evaluatee_id', $adjudicator->id)->average('score');
+            }
+
+            $sum = 0; 
+            $count = 0;
+            \Debugbar::info($this->averages[$adjudicator->id]);
+            foreach ($this->averages[$adjudicator->id] as $ave) {
+                $sum += $ave;
+                $count++;
+            } 
+            $this->averages[$adjudicator->id]['round'] =
+                $count !== 0 ? $sum / $count : 0;
+
+            $fbs = Feedback::get();
+            $sum = 0; 
+            $count = 0;
+            foreach ($fbs as $fb) {
+                $sum += $fb->score;
+                $count++;
+            } 
+            $this->averages[$adjudicator->id]['feedback'] =
+                $count !== 0 ? $sum / $count : 0;
+
+        }
+    }
+}

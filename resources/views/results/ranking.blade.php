@@ -12,23 +12,40 @@
             <th>
                 {{ 'Name' }}
             </th>
+            <th>
+                {{ 'Test score' }}
+            </th>
             @foreach ($rounds as $round) 
                 <th>
-                    {{ $round->name }}
+                    {{ $round->name . ' avg'}}
                 </th>
             @endforeach
+            <th>
+                {{ 'Avg of each avg of round' }}
+            </th>
+            <th>
+                {{ 'Avg of each feedback' }}
+            </th>
         </tr>
     </thead>
-    @foreach ($values as $value)
+    @foreach ($adjudicators as $adjudicator)
         <tr>
             <td>
-                {{ $value->name }}
+                {{ $adjudicator->name }}
             </td>
             <td>
-                {{ $value->active}}
+                {{ $rankings->test_scores[$adjudicator->id] }}
+            </td>
+            @foreach ($rounds as $round) 
+                <td>
+                    {{ $rankings->averages[$adjudicator->id][$round->id] }}
+                </td>
+            @endforeach
+            <td>
+                {{ $rankings->averages[$adjudicator->id]['round'] }}
             </td>
             <td>
-                {{-- {!! delete_form([$controller, $value->id]) !!} --}}
+                {{ $rankings->averages[$adjudicator->id]['feedback'] }}
             </td>
         </tr>
     @endforeach

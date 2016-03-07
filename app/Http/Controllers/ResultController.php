@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Models\Adjudicator;
+use App\Http\Models\Ranking;
 use App\Http\Models\Round;
 use App\Http\Models\Team;
 
@@ -19,8 +21,10 @@ class ResultController extends Controller {
 
     public function ranking() {
         $rounds = Round::get();
-        $values = Team::get();
+        $adjudicators = Adjudicator::get();
+        $rankings = new Ranking();
 
-        return view('results.ranking', compact('rounds', 'values'));
+        return view('results.ranking',
+            compact('adjudicators', 'rankings', 'rounds'));
     }
 }
