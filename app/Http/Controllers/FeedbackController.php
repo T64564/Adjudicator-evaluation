@@ -35,7 +35,12 @@ class FeedbackController extends Controller {
     }
 
     public function store(Request $request) {
-        $this->validateRequest($request);
+        $errors = Feedback::validateRequest($request);
+        if (!empty($errors)) {
+            return redirect()->route('feedbacks.create', 
+                ['round_id' => $request->round_id])
+                ->withErrors($errors)->withInput();
+        }
         Feedback::create($request->all());
         $name = $request->id;
         $round_id = $request->round_id;
@@ -56,15 +61,28 @@ class FeedbackController extends Controller {
             compact('round', 'feedback', 'types', 'adj_names', 'team_names'));
     }
 
-    public function validateRequest($request) {
-        $id = ($request->has('id')) ? ',' . $request->input('id') : '';
-        $rules = config('validations.feedbacks');
-
-        foreach ($rules as $key => $rule) {
-            if (preg_match('/.*unique.*/', $rule)) {
-                $rules[$key] .= $id;
-            }
+    public function update(Request $request) {
+        $errors = Feedback::validateRequest($request);
+        if (!empty($errors)) {
+            return redirect()->route('feedbacks.create', 
+                ['round_id' => $request->round_id])
+                ->withErrors($errors)->withInput();
         }
-        $this->validate($request, $rules);
+        $feedback = Feedback::findOrFail($request['id']);
+        $feedback->update($request->all());
+        $name = $request->id;
+        $round_id = $request->round_id;
+
+        \Session::flash('flash_message', "update $name.");
+        return redirect()->route('feedbacks.enter_results', 
+            ['round_id' => $request->round_id]);
     }
+
+    public function check($round_id) {
+        $errors = Feedback::checkConsistency($round_id);
+        return redirect()
+            ->route('feedbacks.enter_results', ['round_id' => $round_id])
+            ->withErrors($errors);
+    }
+
 }

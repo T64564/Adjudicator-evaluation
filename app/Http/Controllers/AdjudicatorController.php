@@ -12,8 +12,8 @@ class AdjudicatorController extends Controller {
 
     public function index() {
         $heads = Adjudicator::getTableHeader();
-        $values = Adjudicator::get();
-        return view('adjudicators.index', compact('heads', 'values'));
+        $adjudicators = Adjudicator::get();
+        return view('adjudicators.index', compact('heads', 'adjudicators'));
     }
 
     public function show() {

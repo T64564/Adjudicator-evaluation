@@ -18,6 +18,6 @@ return [
     ],
 
     'feedbacks' => [
-        'score' => 'required|between:0,10',
+        'score' => 'required|between:0,10|required',
     ],
 ];

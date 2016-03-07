@@ -12,8 +12,8 @@ class TeamController extends Controller {
 
     public function index() {
         $heads = Team::getTableHeader();
-        $values = Team::get();
-        return view('teams.index', compact('heads', 'values'));
+        $teams = Team::get();
+        return view('teams.index', compact('heads', 'teams'));
     }
 
     public function show() {

@@ -5,6 +5,8 @@
     <div style="text-align:left">
         Feedback {{ $round->name }}
         <div style="float:right">
+            {!! link_to('feedbacks/' . $round->id . '/check',
+            'Check', ['class' => 'btn btn-primary']) !!}    
             {!! link_to('feedbacks/' . $round->id . '/create',
             'Add new', ['class' => 'btn btn-primary']) !!}    
         </div>
@@ -22,7 +24,6 @@
             @endforeach
         </tr>
     </thead>
-
     @foreach ($feedbacks as $feedback)
         <tr>
             <td>

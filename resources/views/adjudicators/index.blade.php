@@ -22,22 +22,26 @@
             @endforeach
         </tr>
     </thead>
-    @foreach ($values as $value)
+    @foreach ($adjudicators as $adjudicator)
         <tr>
             <td>
-                {{ $value->name }}
+                {{ $adjudicator->name }}
             </td>
             <td>
-                {{ $value->test_score}}
+                {{ $adjudicator->test_score}}
             </td>
             <td>
-                {{ $value->total_score }}
+                {{ $adjudicator->total_score }}
             </td>
             <td>
-                {{ $value->active}}
+                {{ $adjudicator->active}}
             </td>
             <td>
-                {{ Form::open(['method' => 'DELETE', 'url' => ['adjudicators', $value->id]]) }}
+                {{ link_to('adjudicators/' . $adjudicator->id . '/edit', 
+                'Edit', ['class' => 'btn btn-primary']) }}
+            </td>
+            <td>
+                {{ Form::open(['method' => 'DELETE', 'url' => ['adjudicators', $adjudicator->id]]) }}
                 {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
                 {{ Form::close() }}
             </td>

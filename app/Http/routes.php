@@ -51,15 +51,22 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('feedbacks/{round}/create',
         ['as' => 'feedbacks.create',
         'uses' => 'FeedbackController@create']);
-    Route::post('feedbacks/store',
+    Route::post('feedbacks',
         ['as' => 'feedbacks.store',
         'uses' => 'FeedbackController@store']);
     Route::get('feedbacks/{round}/{feedback}/edit',
         ['as' => 'feedbacks.edit',
         'uses' => 'FeedbackController@edit']);
-    Route::post('feedbacks/update',
+    Route::patch('feedbacks/{feedback}',
         ['as' => 'feedbacks.update',
         'uses' => 'FeedbackController@update']);
+    Route::get('feedbacks/{round}/check',
+        ['as' => 'feedbacks.check',
+        'uses' => 'FeedbackController@check']);
+
+    Route::get('result/ranking',
+        ['as' => 'results.ranking',
+        'uses' => 'ResultController@ranking']);
 
     Route::resource('adjudicators', 'AdjudicatorController');
     Route::resource('teams', 'TeamController');

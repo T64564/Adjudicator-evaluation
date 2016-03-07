@@ -12,8 +12,8 @@ class RoundController extends Controller {
 
     public function index() {
         $heads = Round::getTableHeader();
-        $values = Round::get();
-        return view('rounds.index', compact('heads', 'values'));
+        $rounds = Round::get();
+        return view('rounds.index', compact('heads', 'rounds'));
     }
 
     public function create() {

@@ -2,8 +2,7 @@
 @section('content')
 <h1>
     <div style="text-align:left">
-        Feedback
-        : Edit
+        Feedback Edit
         <div style="float:right">
             {!! link_to('feedbacks/' . $round->id . '/enter_results', 'Back', 
             ['class' => 'btn btn-primary']) !!}    
@@ -14,7 +13,7 @@
 @include('errors.form_errors')
 {{ Form::model($feedback, 
 ['method' => 'PATCH', 'route' => ['feedbacks.update', $feedback->id]]) }}
-@include('feedbacks.form', ['submitButton' => 'Create']) 
+@include('feedbacks.form', ['submitButton' => 'Edit']) 
 {{ Form::close() }}
 <hr/>
 @stop

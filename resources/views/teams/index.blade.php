@@ -22,16 +22,22 @@
             @endforeach
         </tr>
     </thead>
-    @foreach ($values as $value)
+    @foreach ($teams as $team)
         <tr>
             <td>
-                {{ $value->name }}
+                {{ $team->name }}
             </td>
             <td>
-                {{ $value->active}}
+                {{ $team->active}}
             </td>
             <td>
-                {{-- {!! delete_form([$controller, $value->id]) !!} --}}
+                {{ link_to('teams/' . $team->id . '/edit', 
+                'Edit', ['class' => 'btn btn-primary']) }}
+            </td>
+            <td>
+                {{ Form::open(['method' => 'DELETE', 'url' => ['adjudicators', $team->id]]) }}
+                {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
+                {{ Form::close() }}
             </td>
         </tr>
     @endforeach
