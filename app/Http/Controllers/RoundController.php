@@ -45,6 +45,11 @@ class RoundController extends Controller {
     }
 
     public function destroy(Round $round) {
+        $name = $round->name;
+        $round->delete();
+
+        \Session::flash('flash_message', "Delete \"$name\".");
+        return redirect('rounds');
     }
 
     public function validateRequest($request) {

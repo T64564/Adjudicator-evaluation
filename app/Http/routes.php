@@ -60,6 +60,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::patch('feedbacks/{feedback}',
         ['as' => 'feedbacks.update',
         'uses' => 'FeedbackController@update']);
+    Route::delete('feedbacks/{round}/{feedback}',
+        ['as' => 'feedbacks.destroy',
+        'uses' => 'FeedbackController@destroy']);
     Route::get('feedbacks/{round}/check',
         ['as' => 'feedbacks.check',
         'uses' => 'FeedbackController@check']);

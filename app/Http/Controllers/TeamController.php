@@ -49,6 +49,11 @@ class TeamController extends Controller {
     }
 
     public function destroy(Team $team) {
+        $name = $team->name;
+        $team->delete();
+
+        \Session::flash('flash_message', "Delete \"$name\".");
+        return redirect('teams');
     }
 
     public function getImport() {

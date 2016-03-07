@@ -77,6 +77,16 @@ class FeedbackController extends Controller {
             ['round_id' => $request->round_id]);
     }
 
+    public function destroy($round_id, $feedback_id) {
+        $feedback = Feedback::findOrFail($feedback_id);
+        $name = Feedback::getTypeName($feedback->type);
+        $feedback->delete();
+
+        \Session::flash('flash_message', "Delete \"$name\".");
+        return redirect()->route('feedbacks.enter_results', 
+            ['round_id' => $round_id]);
+    }
+
     public function check($round_id) {
         $errors = Feedback::checkConsistency($round_id);
         return redirect()

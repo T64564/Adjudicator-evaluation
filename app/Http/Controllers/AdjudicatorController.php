@@ -52,7 +52,12 @@ class AdjudicatorController extends Controller {
         return redirect()->route('adjudicators.index');
     }
 
-    public function destroy() {
+    public function destroy(Adjudicator $adj) {
+        $name = $adj->name;
+        $adj->delete();
+
+        \Session::flash('flash_message', "Delete \"$name\".");
+        return redirect('adjudicators');
     }
 
     public function getImport() {

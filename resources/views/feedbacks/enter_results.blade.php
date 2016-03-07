@@ -42,7 +42,7 @@
                 {{ link_to('feedbacks/' . "$round->id/$feedback->id" . '/edit', 'Edit', ['class' => 'btn btn-primary']) }}
             </td>
             <td>
-                {{ Form::open(['method' => 'DELETE', 'url' => ['feedback', $feedback->id]]) }}
+                {{ Form::open(['method' => 'DELETE', 'url' => ['feedbacks', $round->id, $feedback->id]]) }}
                 {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
                 {{ Form::close() }}
             </td>
