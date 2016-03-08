@@ -2,34 +2,28 @@
 @section('content')
 @include('errors.form_errors')
 <h1>
-    Adjudicator Ranking
+    <div style="text-align:left">
+        Adjudicator Ranking
+        <div style="float:right">
+            {{ link_to('results/ranking/export_csv',
+            'Download csv', ['class' => 'btn btn-primary']) }}    
+        </div>
+    </div>
 </h1>
 <hr />
 <script type="text/javascript">
 window.onload = function() {
-        $("#table").tablesorter(); 
+    $("#table").tablesorter(); 
 }
 </script>
 <table id='table' class="table table-striped table-hover">
     <thead>
         <tr>
-            <th>
-                {{ 'Name' }}
-            </th>
-            <th>
-                {{ 'Test score' }}
-            </th>
-            @foreach ($rounds as $round) 
+            @foreach ($heads as $head)
                 <th>
-                    {{ $round->name . ' avg'}}
+                    {{ $head }}
                 </th>
             @endforeach
-            <th>
-                {{ 'Avg of each avg of round' }}
-            </th>
-            <th>
-                {{ 'Avg of each feedback' }}
-            </th>
         </tr>
     </thead>
     @foreach ($adjudicators as $adjudicator)

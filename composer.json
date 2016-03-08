@@ -25,7 +25,8 @@
             "App\\": "app/"
         },
         "files": [
-            "app/Http/importer.php"
+            "app/Http/importer.php",
+            "app/Http/exporter.php"
         ]
     },
     "autoload-dev": {

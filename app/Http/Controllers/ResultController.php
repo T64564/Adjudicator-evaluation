@@ -14,17 +14,24 @@ use App\Http\Models\Team;
 class ResultController extends Controller {
 
     public function index() {
-        $heads = Team::getTableHeader();
-        $values = Team::get();
-        return view('teams.index', compact('heads', 'values'));
+        $this->ranking();
     }
 
     public function ranking() {
         $rounds = Round::get();
         $adjudicators = Adjudicator::get();
         $rankings = new Ranking();
+        $heads = $rankings->getTableHeader();
 
         return view('results.ranking',
-            compact('adjudicators', 'rankings', 'rounds'));
+            compact('adjudicators', 'heads', 'rankings', 'rounds'));
+    }
+
+    public function getExport() {
+        $rankings = new Ranking();
+        $heads = $rankings->getTableHeader();
+        $list = $rankings->getListForCsvExport();
+
+        return exportRankingCsv($list, $heads, 'ranking.csv');
     }
 }

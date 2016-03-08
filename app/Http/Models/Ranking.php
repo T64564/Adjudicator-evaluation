@@ -67,4 +67,42 @@ class Ranking {
                 $count !== 0 ? $sum / $count : 0;
         }
     }
+
+    public function getTableHeader() {
+        $rounds = Round::get();
+        $heads = [];
+        $heads[] = 'Name';
+        $heads[] = 'Test score';
+        foreach ($rounds as $round) {
+            $heads[] = $round->name . ' avg';
+        }
+        $heads[] = 'Avg of each avg of round';
+        $heads[] = 'Avg of each feedback';
+        return $heads;
+    }
+
+    /*
+     * Name
+     * Test score
+     * Round
+     * ...
+     * Avg1
+     * Avg2
+     *
+     */
+    public function getListForCsvExport() {
+        $rankings = new Ranking();
+        $adjudicators = Adjudicator::get();
+        $rounds = Round::get();
+        $list = [];
+
+        foreach ($adjudicators as $adjudicator) {
+            $list[$adjudicator->id][] = $adjudicator->name;
+            $list[$adjudicator->id][] = $rankings->test_scores[$adjudicator->id];
+            foreach ($rankings->averages[$adjudicator->id] as $avg) {
+                $list[$adjudicator->id][] = $avg;
+            }
+        }
+        return $list;
+    }
 }

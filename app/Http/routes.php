@@ -67,9 +67,12 @@ Route::group(['middleware' => ['web']], function () {
         ['as' => 'feedbacks.check',
         'uses' => 'FeedbackController@check']);
 
-    Route::get('result/ranking',
+    Route::get('results/ranking',
         ['as' => 'results.ranking',
         'uses' => 'ResultController@ranking']);
+    Route::get('results/ranking/export_csv',
+        ['as' => 'results.ranking.export_csv',
+        'uses' => 'ResultController@getExport']);
 
     Route::resource('adjudicators', 'AdjudicatorController');
     Route::resource('teams', 'TeamController');
