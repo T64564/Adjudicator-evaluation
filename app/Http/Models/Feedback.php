@@ -74,8 +74,9 @@ class Feedback extends Model {
 
         if ($request['type'] === '0') {
             if (Feedback::where('round_id', $request['round_id'])
-                ->where('type', 0)->whereNotIn('id', [$request['id']])->get()
-                ->contains('evaluator_id', $request['evaluator_id'])) {
+                ->where('type', 0)->whereNotIn('id', [$request['id']])
+                ->where('evaluator_id', $request['evaluator_id'])
+                ->exist()) {
                 $errors[] = 
                     'This team has already submitted a feedback to '
                     . Adjudicator::
@@ -88,6 +89,7 @@ class Feedback extends Model {
             }
 
             if (Feedback::where('round_id', $request['round_id'])
+                ->whereNotIn('type', [0])->whereNotIn('id', [$request['id']])
                 ->where('evaluatee_id', $request['evaluatee_id'])
                 ->where('evaluator_id', $request['evaluator_id'])
                 ->exists()) {
@@ -172,9 +174,9 @@ class Feedback extends Model {
                 !$fbs->where('type', 2)
                 ->contains('evaluator_id', $fb->evaluatee)) {
                 $chair_name = 
-                     Adjudicator::findOrFail($fb->evaluator_id)->name;
+                    Adjudicator::findOrFail($fb->evaluator_id)->name;
                 $panel_name =
-                     Adjudicator::findOrFail($fb->evaluatee_id)->name;
+                    Adjudicator::findOrFail($fb->evaluatee_id)->name;
                 $errors[] = 'Chair (' 
                     . $chair_name 
                     . ') evaluate panelist ('
@@ -185,16 +187,16 @@ class Feedback extends Model {
             if ($fb->type === 3 &&
                 $fbs->contains('evaluator_id', $fb->evaluatee)) {
                 $chair_name = 
-                     Adjudicator::findOrFail($fb->evaluator_id)->name;
+                    Adjudicator::findOrFail($fb->evaluator_id)->name;
                 $trainee_name =
-                     Adjudicator::findOrFail($fb->evaluatee_id)->name;
+                    Adjudicator::findOrFail($fb->evaluatee_id)->name;
                 $errors[] = 'Chair (' 
                     . $chair_name 
                     . ') evaluate trainee('
                     . $trainee_name 
                     . '), but the trainee evaluate an adjudicator.';
             }
-                
+
         }
 
         $fbs_by_panel = $fbs->where('type', 2);
@@ -228,9 +230,9 @@ class Feedback extends Model {
             if (!$fbs->where('type', 1)
                 ->contains('evaluator_id', $fb->evaluatee)) {
                 $panel_name =
-                     Adjudicator::findOrFail($fb->evaluator_id)->name;
+                    Adjudicator::findOrFail($fb->evaluator_id)->name;
                 $chair_name = 
-                     Adjudicator::findOrFail($fb->evaluatee_id)->name;
+                    Adjudicator::findOrFail($fb->evaluatee_id)->name;
                 $errors[] = 'Panelist (' 
                     . $panel_name 
                     . ') evaluate chair ('

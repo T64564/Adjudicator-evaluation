@@ -12,16 +12,16 @@
     'onchange' => 'updateEvaluator(this.value)']) }}
 </div>
 <div class="form-group">
-    {{ Form::label('evaluatee_name', 'Evaluatee:') }}
+    {{ Form::label('evaluatee_id', 'Evaluatee:') }}
     {{ Form::select('evaluatee_id', $adj_names, 
     null,
     ['class' => 'form-control']) }}
 </div>
 <div class="form-group">
-    {{ Form::label('evaluator_name', 'Evaluator:') }}
+    {{ Form::label('evaluator_id', 'Evaluator:') }}
     {{ Form::select('evaluator_id', $team_names, 
     null,
-    ['class' => 'form-control']) }}
+    ['id' => 'evaluater_id', 'class' => 'form-control']) }}
 </div>
 <div class="form-group">
     {{ Form::label('score', 'Score:') }}
@@ -39,7 +39,18 @@ var team_names = JSON.parse('<?php echo json_encode($team_names) ?>');
 var adj_names = JSON.parse('<?php echo json_encode($adj_names) ?>');
 
 window.onload = function() {
-    updateEvaluator($('#type').val());
+    var type = $('#type').val();
+    if (type != 0) {
+        updateEvaluator(type);
+
+        var evaluator_id = <?php 
+            echo isset($feedback->evaluator_id) ? $feedback->evaluator_id : -1; 
+        ?>
+
+        if (evaluator_id != -1) {
+            $('[name = evaluator_id]').val(evaluator_id);
+        }
+    }
 }
 
 function updateEvaluator(value) {
@@ -61,6 +72,7 @@ function updateEvaluator(value) {
                             + adj_names[key] + '</option>'));
         }
     }
+
 }
 
 </script>
