@@ -72,8 +72,7 @@ class TeamController extends Controller {
             return view('teams.import_csv');
         }
 
-        /* add timestamp */
-        $fileName = $file->getClientOriginalName(). '_'. time();
+        $fileName = $file->getClientOriginalName();
         $move = $file->move(storage_path(). '/upload', $fileName);
 
         $update = false;

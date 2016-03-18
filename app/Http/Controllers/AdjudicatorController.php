@@ -68,8 +68,7 @@ class AdjudicatorController extends Controller {
             return redirect()->route('adjudicators.import_csv');
         }
 
-        /* add timestamp */
-        $fileName = $file->getClientOriginalName(). '_'. time();
+        $fileName = $file->getClientOriginalName();
         $move = $file->move(storage_path(). '/upload', $fileName);
 
         $update = false;
