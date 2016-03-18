@@ -8,7 +8,7 @@ class Round extends Model {
     protected $fillable = ['name', 'silent'];
 
     public static function getTableHeader() {
-        $tableHeader = ['Name', 'Silent', 'Edit', 'Delete'];
+        $tableHeader = ['Id', 'Name', 'Silent', 'Edit', 'Delete'];
         return $tableHeader;
     }
 }

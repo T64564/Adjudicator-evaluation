@@ -49,7 +49,7 @@ class RoundController extends Controller {
         $round->delete();
 
         \Session::flash('flash_message', "Delete \"$name\".");
-        return redirect('rounds');
+        return redirect()->route('rounds.index');
     }
 
     public function validateRequest($request) {

@@ -50,10 +50,15 @@ class TeamController extends Controller {
 
     public function destroy(Team $team) {
         $name = $team->name;
-        $team->delete();
+        $success = $team->delete();
 
-        \Session::flash('flash_message', "Delete \"$name\".");
-        return redirect('teams');
+        if ($success) {
+            \Session::flash('flash_message', "Delete \"$name\".");
+        } else {
+            \Session::flash('flash_danger', "$name is referrenced by feedbacks.");
+        }
+
+        return redirect()->route('teams.index');
     }
 
     public function getImport() {

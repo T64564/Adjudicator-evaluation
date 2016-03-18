@@ -1,5 +1,12 @@
 @extends('layouts.layout')
 @section('content')
+
+<script type="text/javascript">
+window.onload = function() {
+    $("#table").tablesorter(); 
+}
+</script>
+
 <h1>
     <div style="text-align:left">
         Rounds
@@ -12,8 +19,7 @@
     </div>
 </h1>
 <hr />
-
-<table class="table table-striped table-hover">
+<table id="table" class="table table-striped table-hover">
     <thead>
         <tr>
             @foreach ($heads as $head) 
@@ -26,10 +32,17 @@
     @foreach ($rounds as $round)
         <tr>
             <td>
+                {{ $round->id }}
+            </td>
+            <td>
                 {{ $round->name }}
             </td>
             <td>
-                {{ $round->silent}}
+                @if ($round->silent === 1)
+                    Yes
+                @else
+                    No
+                @endif
             </td>
             <td>
                 {{ link_to('rounds/' . $round->id . '/edit', 

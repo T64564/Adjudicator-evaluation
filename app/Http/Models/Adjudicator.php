@@ -8,7 +8,7 @@ class Adjudicator extends Model {
     protected $fillable = ['name', 'test_score', 'active'];
 
     public static function getTableHeader() {
-        $tableHeader = ['Name', 'Test score', 'Active', 'Edit', 'Delete'];
+        $tableHeader = ['Id', 'Name', 'Test score', 'Active', 'Edit', 'Delete'];
         return $tableHeader;
     }
 

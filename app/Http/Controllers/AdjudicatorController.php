@@ -31,7 +31,7 @@ class AdjudicatorController extends Controller {
         $name = $request->name;
 
         \Session::flash('flash_message', "Create $name.");
-        return redirect()->route('adjudicators');
+        return redirect()->route('adjudicators.index');
     }
 
     public function edit(Adjudicator $adj) {
@@ -54,7 +54,7 @@ class AdjudicatorController extends Controller {
         $adj->delete();
 
         \Session::flash('flash_message', "Delete \"$name\".");
-        return redirect('adjudicators');
+        return redirect()->route('adjudicators.index');
     }
 
     public function getImport() {

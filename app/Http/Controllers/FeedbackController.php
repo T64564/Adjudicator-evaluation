@@ -19,10 +19,11 @@ class FeedbackController extends Controller {
     }
 
     public function enterResults($round_id) {
-        $heads = ['Type', 'Evaluatee', 'Evaluator', 'Score', 'Edit', 'Delete'];
+        $heads = Feedback::getTableHeader();
         $round = Round::findOrFail($round_id);
         $feedbacks = Feedback::getListing($round_id);
-        return view('feedbacks.enter_results', compact('heads', 'round', 'feedbacks'));
+        return view('feedbacks.enter_results', 
+            compact('heads', 'round', 'feedbacks'));
     }
 
     public function create($round_id) {
@@ -89,7 +90,10 @@ class FeedbackController extends Controller {
     }
 
     public function check($round_id) {
-        $errors = Feedback::checkConsistency($round_id);
+        Feedback::checkConsistency($round_id, $info, $errors);
+        if (!empty($info)) {
+            \Session::flash('flash_info', $info);
+        }
         return redirect()
             ->route('feedbacks.enter_results', ['round_id' => $round_id])
             ->withErrors($errors);

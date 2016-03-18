@@ -1,6 +1,13 @@
 @extends('layouts.layout')
 @section('content')
 @include('errors.form_errors')
+
+<script type="text/javascript">
+window.onload = function() {
+    $("#table").tablesorter(); 
+}
+</script>
+
 <h1>
     <div style="text-align:left">
         Adjudicators
@@ -14,7 +21,7 @@
 </h1>
 <hr />
 
-<table class="table table-striped table-hover">
+<table id="table" class="table table-striped table-hover">
     <thead>
         <tr>
             @foreach ($heads as $head) 
@@ -27,13 +34,20 @@
     @foreach ($adjs as $adj)
         <tr>
             <td>
+                {{ $adj->id }}
+            </td>
+            <td>
                 {{ $adj->name }}
             </td>
             <td>
                 {{ $adj->test_score}}
             </td>
             <td>
-                {{ $adj->active}}
+                @if ($adj->active === 1)
+                    Yes
+                @else
+                    No
+                @endif
             </td>
             <td>
                 {{ link_to('adjudicators/' . $adj->id . '/edit', 
