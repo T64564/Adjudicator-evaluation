@@ -43,6 +43,9 @@ function importCsv($fileName, $modelName, $fillable, $update = false) {
         if (preg_match('/.*unique.*/', $rule)) {
             $uniqueKeys[] = $key;
         }
+        if ($update) {
+            $rules[$key] = preg_replace('/\|unique[^\|]*/', '', $rule);
+        }
     }
 
     /* 
@@ -58,12 +61,14 @@ function importCsv($fileName, $modelName, $fillable, $update = false) {
             $canInsert = false;
         }
 
-        foreach ($uniqueKeys as $u) {
-            if ($update) break;
-            for ($i = 0; $i < count($data); $i++) {
-                if ($data[$i] === $new) {
-                    $errors[] = "The $u ($new[$u]) has already been taken.  (on line $line.)";
-                    $canInsert = false;
+        if ($update) {
+            foreach ($uniqueKeys as $u) {
+                foreach ($data as $d) {
+                    if ($d[$u] === $new[$u]) {
+                        $errors[] = 
+                            "The $u ($new[$u]) has already been taken.  (on line $line.)";
+                        $canInsert = false;
+                    }
                 }
             }
         }
@@ -79,9 +84,18 @@ function importCsv($fileName, $modelName, $fillable, $update = false) {
      * Insert
      */
     $modelName = 'App\\Http\\Models\\' . $modelName;
-    foreach ($data as $d) {
-        $model = new $modelName($d);
-        $model->save();
+    if ($update) {
+        foreach ($data as $d) {
+            $model = new $modelName($d);
+            $id = $modelName::where('name', $d['name'])->firstOrFail()->id;
+            $model = $model->findOrFail($id);
+            $model->update($d);
+        }
+    } else {
+        foreach ($data as $d) {
+            $model = new $modelName($d);
+            $model->save();
+        }
     }
 
     return $errors;

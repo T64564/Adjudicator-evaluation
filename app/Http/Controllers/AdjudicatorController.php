@@ -84,6 +84,7 @@ class AdjudicatorController extends Controller {
         if (empty($errors)) {
             \Session::flash('flash_message', "File uploaded successfully.");
         }
+
         return view('adjudicators.import_csv')->withErrors($errors);
     }
 
