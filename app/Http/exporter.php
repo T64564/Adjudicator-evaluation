@@ -5,9 +5,7 @@ function exportRankingCsv($list, $heads, $file_name) {
         fputcsv($stream, $heads);
     }
     foreach ($list as $row) {
-        \Debugbar::info($row);
-        fputcsv($stream, 
-            $row);
+        fputcsv($stream, $row);
     }
     rewind($stream);
     $csv = str_replace(PHP_EOL, "\r\n", stream_get_contents($stream));

@@ -38,14 +38,21 @@ window.onload = function() {
             </td>
             @foreach ($rounds as $round) 
                 <td>
-                    {{ $rankings->averages[$adjudicator->id][$round->id] }}
+                    <?php 
+                    $score = $rankings->averages[$adjudicator->id][$round->id];
+                    if ($score !== null) {
+                    echo round($score, 5);
+                    } else {
+                    echo 'N/a';
+                    }
+                    ?>
                 </td>
             @endforeach
             <td>
-                {{ $rankings->averages[$adjudicator->id]['round'] }}
+                {{ round($rankings->averages[$adjudicator->id]['round'], 5) }}
             </td>
             <td>
-                {{ $rankings->averages[$adjudicator->id]['feedback'] }}
+                {{ round($rankings->averages[$adjudicator->id]['feedback'], 5) }}
             </td>
         </tr>
     @endforeach

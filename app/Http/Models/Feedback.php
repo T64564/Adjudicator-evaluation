@@ -131,7 +131,7 @@ class Feedback extends Model {
      * - trainees that evaluate.
      *
      * infomation
-     * - w
+     * - 
      */
     public static function checkConsistency($round_id, &$info, &$errors) {
         $info = [];
