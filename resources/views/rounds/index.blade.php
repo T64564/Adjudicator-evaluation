@@ -50,7 +50,7 @@ window.onload = function() {
             </td>
             <td>
                 {{ Form::open(['method' => 'DELETE', 
-                'url' => ['adjudicators', $round->id]]) }}
+                'url' => ['rounds', $round->id]]) }}
                 {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
                 {{ Form::close() }}
             </td>

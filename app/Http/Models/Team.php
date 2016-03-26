@@ -17,7 +17,7 @@ class Team extends Model {
      */
     public static function getNamesForSelectbox() {
         $names = [];
-        $teams = Team::where('active', 1)->get();
+        $teams = Team::where('active', 1)->orderBy('name')->get();
 
         foreach ($teams as $team) {
             $names[$team->id] = $team->name;

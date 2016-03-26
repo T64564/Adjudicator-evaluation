@@ -33,7 +33,7 @@ class Feedback extends Model {
 
     public static function getTableHeader() {
         $tableHeader = 
-            ['Id', 'Type', 'Evaluatee', 'Evaluator', 'Score', 'Edit', 'Delete'];
+            ['Id', 'Type', 'Evaluator', 'Evaluatee', 'Score', 'Edit', 'Delete'];
         return $tableHeader;
     }
 
@@ -84,16 +84,16 @@ class Feedback extends Model {
                 $errors[] = 'Any team may not evaluate in a silent round.';
             }
 
-            if (Feedback::where('round_id', $request['round_id'])
-                ->where('type', 0)->whereNotIn('id', [$request['id']])
-                ->where('evaluator_id', $request['evaluator_id'])
-                ->exists()) {
-                $errors[] = 
-                    'This team has already submitted a feedback to '
-                    . Adjudicator::
-                    findOrFail($request['evaluatee_id'])->name
-                    . '.';
-            }
+            // if (Feedback::where('round_id', $request['round_id'])
+            //     ->where('type', 0)->whereNotIn('id', [$request['id']])
+            //     ->where('evaluator_id', $request['evaluator_id'])
+            //     ->exists()) {
+            //     $errors[] = 
+            //         'This team has already submitted a feedback to '
+            //         . Adjudicator::
+            //         findOrFail($request['evaluatee_id'])->name
+            //         . '.';
+            // }
         } else {
             if ($request['evaluator_id'] === $request['evaluatee_id']) {
                 $errors[] = 'The evaluatee and the evaluator are the same id.';
@@ -143,16 +143,21 @@ class Feedback extends Model {
 
         foreach ($teams as $team) {
             if ($round->silent == 0) {
-                if (!$fbs->where('type', 0)->contains('evaluator_id', $team->id)) {
-                    $errors[] = $team->name 
-                        . ' doesn\'t evaluate anyone.';
-                }
-            } else {
-                if ($fbs->where('type', 0)->contains('evaluator_id', $team->id)) {
-                    $errors[] = $team->name 
-                        . ' may not evaluate anyone in a silent round.';
-                }
+            $count = $fbs->where('type', 0)->where('evaluator_id', $team->id)->count();
+            if ($count == 0) {
+                $errors[] = $team->name 
+                    . ' doesn\'t evaluate anyone.';
             }
+            if ($count > 1) {
+                $errors[] = $team->name 
+                    . ' evaluate ' . $count . ' times.';
+            }
+        } else {
+            if ($fbs->where('type', 0)->contains('evaluator_id', $team->id)) {
+                $errors[] = $team->name 
+                    . ' may not evaluate anyone in a silent round.';
+            }
+        }
         }
 
         foreach ($adjs as $adj) {

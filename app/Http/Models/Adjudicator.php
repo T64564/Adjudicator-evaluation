@@ -17,10 +17,10 @@ class Adjudicator extends Model {
      */
     public static function getNamesForSelectbox() {
         $names = [];
-        $teams = Adjudicator::where('active', 1)->get();
+        $adjs = Adjudicator::where('active', 1)->orderBy('name')->get();
 
-        foreach ($teams as $team) {
-            $names[$team->id] = $team->name;
+        foreach ($adjs as $adj) {
+            $names[$adj->id] = $adj->name;
         }
         return $names;
     }

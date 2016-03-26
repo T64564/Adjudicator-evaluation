@@ -23,14 +23,14 @@ class Ranking {
     }
 
     private function fillTestScores() {
-        $adjudicators = Adjudicator::get();
+        $adjudicators = Adjudicator::where('active', 1)->get();
         foreach ($adjudicators as $adjudicator) {
             $this->test_scores[$adjudicator->id] = $adjudicator->test_score;
         }
     }
 
     private function fillAverages() {
-        $adjudicators = Adjudicator::get();
+        $adjudicators = Adjudicator::where('active', 1)->get();
         $rounds = Round::get();
 
         foreach ($adjudicators as $adjudicator) {
@@ -92,7 +92,7 @@ class Ranking {
      */
     public function getListForCsvExport() {
         $rankings = new Ranking();
-        $adjudicators = Adjudicator::get();
+        $adjudicators = Adjudicator::where('active', 1)->get();
         $rounds = Round::get();
         $list = [];
 

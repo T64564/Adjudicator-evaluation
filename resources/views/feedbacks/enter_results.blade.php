@@ -40,10 +40,10 @@ window.onload = function() {
                 {{ $feedback->type_name }}
             </td>
             <td>
-                {{ $feedback->evaluatee_name }}
+                {{ $feedback->evaluator_name }}
             </td>
             <td>
-                {{ $feedback->evaluator_name }}
+                {{ $feedback->evaluatee_name }}
             </td>
             <td>
                 {{ $feedback->score }}

@@ -19,7 +19,7 @@ class ResultController extends Controller {
 
     public function ranking() {
         $rounds = Round::get();
-        $adjudicators = Adjudicator::get();
+        $adjudicators = Adjudicator::where('active', 1)->get();
         $rankings = new Ranking();
         $heads = $rankings->getTableHeader();
 
