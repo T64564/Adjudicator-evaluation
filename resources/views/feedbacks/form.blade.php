@@ -36,13 +36,11 @@
 
 <?php
 foreach ($team_names as $k => $v) {
-    $team_names[$k] = str_replace("'", "_", $team_names[$k]);
+$team_names[$k] = str_replace("'", "_", $team_names[$k]);
 }
 foreach ($adj_names as $v) {
-    $adj_names[$k] = str_replace("'", "_", $adj_names[$k]);
+$adj_names[$k] = str_replace("'", "_", $adj_names[$k]);
 }
-// var_dump($adj_names);
-// var_dump($team_names);
 ?>
 <script type="text/javascript">
 // TODO: なぜかエラーが起こることがある(原因不明)
@@ -59,9 +57,9 @@ window.onload = function() {
             echo isset($feedback->evaluator_id) ? $feedback->evaluator_id : -1; 
         ?>
 
-        if (evaluator_id != -1) {
-            $('[name = evaluator_id]').val(evaluator_id);
-        }
+            if (evaluator_id != -1) {
+                $('[name = evaluator_id]').val(evaluator_id);
+            }
     }
     prev_type = type;
 }
@@ -94,5 +92,4 @@ function updateEvaluator(type) {
         }
     }
 }
-
 </script>
