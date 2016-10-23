@@ -4,7 +4,6 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-use Illuminate\Support\Facades\Artisan;
 use App\Http\Models\Adjudicator;
 
 class AdjudicatorTest extends TestCase {
