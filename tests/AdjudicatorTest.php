@@ -40,7 +40,6 @@ class AdjudicatorTest extends TestCase {
             ->press('Create')
             ->assertRedirectedTo('/adjudicators/create');
         $this->dontSeeInDatabase('adjudicators', ['name' => $name, 'test_score' => $score]);
-        // $this->seeInDatabase('adjudicators', ['name' => $name, 'test_score' => $score]);
 
         $this->visit('/adjudicators/create')
             ->type('hoge', 'name')
