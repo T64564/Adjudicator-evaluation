@@ -93,7 +93,12 @@ class FeedbackController extends Controller {
         $errors = Feedback::validateRequest($request);
         $path = '';
         if (!empty($errors)) {
+<<<<<<< Updated upstream
             return redirect()->route('feedbacks.edit',
+=======
+            $path = $this->redirectTo($request->page_from);
+            return redirect()->route($path,
+>>>>>>> Stashed changes
                 ['round_id' => $request->round_id])
                 ->withErrors($errors)->withInput();
         }
