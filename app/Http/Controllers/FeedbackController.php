@@ -39,9 +39,9 @@ class FeedbackController extends Controller {
     public function createAdjToAdj($round_id) {
         $round = Round::findOrFail($round_id);
         $types = [
-        1 => 'Chair to panelist',
-        2 => 'Panelist to Chair',
-        3 => 'Chair to trainee',
+            1 => 'Chair to panelist',
+            2 => 'Panelist to Chair',
+            3 => 'Chair to trainee',
         ];
         $adj_names = Adjudicator::getNamesForSelectBox();
         return view('feedbacks.create_adj_to_adj', 
@@ -50,10 +50,11 @@ class FeedbackController extends Controller {
 
     public function store(Request $request) {
         $errors = Feedback::validateRequest($request);
+        $path = '';
         if (!empty($errors)) {
             if ($request->page_from === 'adj_to_adj') {
                 $path = 'feedbacks.create_adj_to_adj';
-            } elseif ($requeist->page_from === 'team_to_adj') {
+            } elseif ($request->page_from === 'team_to_adj') {
                 $path = 'feedbacks.create_team_to_adj';
             }
 
@@ -71,25 +72,28 @@ class FeedbackController extends Controller {
     }
 
     public function edit($round_id, $feedback_id) {
+        $feedback = Feedback::findOrFail($feedback_id);
         $round = Round::findOrFail($round_id);
         $feedback = Feedback::findOrFail($feedback_id);
-        $types = Feedback::getTypes();
+        $types = [ 0 => 'Team to oralist' ];
+        if ($feedback->type !== 0) {
+            $types = [
+                1 => 'Chair to panelist',
+                2 => 'Panelist to Chair',
+                3 => 'Chair to trainee',
+            ];
+        }
         $adj_names = Adjudicator::getNamesForSelectBox();
         $team_names = Team::getNamesForSelectBox();
-        \Debugbar::info($feedback);
         return view('feedbacks.edit', 
             compact('round', 'feedback', 'types', 'adj_names', 'team_names'));
     }
 
     public function update(Request $request) {
         $errors = Feedback::validateRequest($request);
+        $path = '';
         if (!empty($errors)) {
-            if ($request->page_from === 'adj_to_adj') {
-                $path = 'feedbacks.edit_adj_to_adj';
-            } elseif ($requeist->page_from === 'team_to_adj') {
-                $path = 'feedbacks.edit_team_to_adj';
-            }
-            return redirect()->route($path,
+            return redirect()->route('feedbacks.edit',
                 ['round_id' => $request->round_id])
                 ->withErrors($errors)->withInput();
         }

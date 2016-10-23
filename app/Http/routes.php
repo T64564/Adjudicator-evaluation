@@ -59,9 +59,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('feedbacks',
         ['as' => 'feedbacks.store',
         'uses' => 'FeedbackController@store']);
+
     Route::get('feedbacks/{round}/{feedback}/edit',
         ['as' => 'feedbacks.edit',
         'uses' => 'FeedbackController@edit']);
+
     Route::patch('feedbacks/{feedback}',
         ['as' => 'feedbacks.update',
         'uses' => 'FeedbackController@update']);
