@@ -51,7 +51,8 @@ class FeedbackController extends Controller {
     public function store(Request $request) {
         $errors = Feedback::validateRequest($request);
         if (!empty($errors)) {
-            return redirect()->route('feedbacks.create', 
+            $path = $this->redirectTo($request->page_from);
+            return redirect()->route($path,
                 ['round_id' => $request->round_id])
                 ->withErrors($errors)->withInput();
         }
@@ -112,10 +113,10 @@ class FeedbackController extends Controller {
             ->withErrors($errors);
     }
 
-    private function redirectTo($from_page) {
-        if ($from_page === 'adj_to_adj') {
+    private function redirectTo($page_from) {
+        if ($page_from === 'adj_to_adj') {
             return 'feedbacks.create_adj_to_adj';
-        } elseif ($from_page === 'team_to_adj') {
+        } elseif ($page_from === 'team_to_adj') {
             return 'feedbacks.create_adj_to_adj';
         }
         return '';
