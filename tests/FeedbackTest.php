@@ -49,7 +49,6 @@ class FeedbackTest extends TestCase {
             ['type' => 1, 'round_id' => $this->round->id,
             'evaluator_id' => $this->adjudicator->id, 'evaluatee_id' => $this->adjudicator2->id,
             'score' => 10]);
-
         $this->visit('/feedbacks/1/create_adj_to_adj')
             ->select($this->adjudicator->id, 'evaluator_id')
             ->select($this->adjudicator2->id, 'evaluatee_id')

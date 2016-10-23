@@ -61,8 +61,10 @@ class Feedback extends Model {
     /*
      * Check if
      * - the score is valid.
+     * - a team does not submit feedback in a silent round
      * - the team submit more than once.
      * - the evaluator and the evaluatee are the same adjudicator.
+     * - combination (type, evaluator_id, evaluatee_id) is unique
      *
      */
     public static function validateRequest($request) {
@@ -84,16 +86,20 @@ class Feedback extends Model {
                 $errors[] = 'Any team may not evaluate in a silent round.';
             }
 
-            // if (Feedback::where('round_id', $request['round_id'])
-            //     ->where('type', 0)->whereNotIn('id', [$request['id']])
-            //     ->where('evaluator_id', $request['evaluator_id'])
-            //     ->exists()) {
-            //     $errors[] = 
-            //         'This team has already submitted a feedback to '
-            //         . Adjudicator::
-            //         findOrFail($request['evaluatee_id'])->name
-            //         . '.';
-            // }
+            // ここICUTのときコメントアウトしてたけど理由覚えてない
+            // ->where('evaluatee_id', $request['evaluator_id'])
+            // を書き忘れた?
+            if (Feedback::where('round_id', $request['round_id'])
+                ->where('type', 0)->whereNotIn('id', [$request['id']])
+                ->where('evaluatee_id', $request['evaluator_id'])
+                ->where('evaluator_id', $request['evaluator_id'])
+                ->exists()) {
+                $errors[] = 
+                    'This team has already submitted a feedback to '
+                    . Adjudicator::
+                    findOrFail($request['evaluatee_id'])->name
+                    . '.';
+            }
         } else {
             if ($request['evaluator_id'] === $request['evaluatee_id']) {
                 $errors[] = 'The evaluatee and the evaluator are the same id.';
