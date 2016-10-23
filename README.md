@@ -6,17 +6,28 @@
     ```
     $ composer install  
     ```
-3. マイグレーション
+3. マイグレーション(事前に`adjudicator_evaluation`という名前のデータベースを作成して下さい．)
     ```
     $ php artisan migrate  
     ```
-    もしくは，database/migrations/migration.sqlをDBに対して実行．
+    もしくは，`database/migrations/migration.sql`をDBに対して実行．
     
 4. サーバーを起動
     ```
     $ php -S localhost:8000 -t public  
     ```
 5. [localhost:8000/feedbacks](localhost:8000/feedbacks)にアクセス
+    ```
+    PDOException in Connector.php line 55:
+    SQLSTATE[HY000] [2002] No such file or directory
+    ```
+    - 以上のエラーが出る場合は`config/database.php`の66行目`            'unix_socket'=>'/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock',
+`を削除，またはコメントアウトして下さい．
+    ```
+    ErrorException in Filesystem.php line 38:
+    file_get_contents(****): failed to open stream: Permission denied
+    ```
+     - 上エラーのようにPermission deniedと表示される場合は`$ sudo chmod -R 777 bootstrap/cache`，`$ sudo chmod -R 777 storage`を実行して下さい．
 
 ## Authors and Contact
 - Daigo Kimura(木村大吾) ([e-mail](a91381@gmail.com))
