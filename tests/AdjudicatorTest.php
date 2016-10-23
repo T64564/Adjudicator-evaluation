@@ -17,7 +17,8 @@ class AdjudicatorTest extends TestCase {
             ->press('Create')
             ->seePageIs('/adjudicators');
 
-        $this->seeInDatabase('adjudicators', ['name' => $name, 'test_score' => $score, 'active' => true]);
+        $this->seeInDatabase('adjudicators', 
+            ['name' => $name, 'test_score' => $score, 'active' => true]);
 
         $name = 'XXXX';
         $score = 8;
@@ -27,7 +28,8 @@ class AdjudicatorTest extends TestCase {
             ->check('active')
             ->press('Edit')
             ->seePageIs('/adjudicators');
-        $this->seeInDatabase('adjudicators', ['name' => $name, 'test_score' => $score, 'active' => true]);
+        $this->seeInDatabase('adjudicators', 
+            ['name' => $name, 'test_score' => $score, 'active' => true]);
     }
 
     public function testValidationCreate() {
