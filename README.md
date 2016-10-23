@@ -16,4 +16,7 @@
     ```
     $ php -S localhost:8000 -t public  
     ```
-4. [localhost:8000/feedbacks](localhost:8000/feedbacks)にアクセス
+5. [localhost:8000/feedbacks](localhost:8000/feedbacks)にアクセス
+
+## Authors and Contact
+- Daigo Kimura(木村大吾) ([e-mail](a91381@gmail.com))
