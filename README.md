@@ -1,6 +1,6 @@
 # Adjudicator_evaluation
 パーラメンタリーディベートの大会のためのジャッジ評価システムを提供するWebアプリケーション
-# Install
+## Installation
 1. .env.exampleを元に.envをrootに作成
 2. frameworkをインストール
     ```
