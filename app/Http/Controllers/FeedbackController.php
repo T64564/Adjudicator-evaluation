@@ -126,13 +126,4 @@ class FeedbackController extends Controller {
             ->route('feedbacks.enter_results', ['round_id' => $round_id])
             ->withErrors($errors);
     }
-
-    private function redirectTo($page_from) {
-        if ($page_from === 'adj_to_adj') {
-            return 'feedbacks.create_adj_to_adj';
-        } elseif ($page_from === 'team_to_adj') {
-            return 'feedbacks.create_adj_to_adj';
-        }
-        return '';
-    }
 }
