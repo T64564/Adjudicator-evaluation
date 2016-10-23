@@ -48,9 +48,14 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('feedbacks/{round}/enter_results',
         ['as' => 'feedbacks.enter_results',
         'uses' => 'FeedbackController@enterResults']);
-    Route::get('feedbacks/{round}/create',
-        ['as' => 'feedbacks.create',
-        'uses' => 'FeedbackController@create']);
+
+    Route::get('feedbacks/{round}/create_team_to_adj',
+        ['as' => 'feedbacks.create_team_to_adj',
+        'uses' => 'FeedbackController@createTeamToAdj']);
+    Route::get('feedbacks/{round}/create_adj_to_adj',
+        ['as' => 'feedbacks.create_adj_to_adj',
+        'uses' => 'FeedbackController@createAdjToAdj']);
+
     Route::post('feedbacks',
         ['as' => 'feedbacks.store',
         'uses' => 'FeedbackController@store']);

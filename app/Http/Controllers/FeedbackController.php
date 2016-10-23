@@ -26,13 +26,22 @@ class FeedbackController extends Controller {
             compact('heads', 'round', 'feedbacks'));
     }
 
-    public function create($round_id) {
+    public function createTeamToAdj($round_id) {
         $round = Round::findOrFail($round_id);
         $types = Feedback::getTypes();
         $adj_names = Adjudicator::getNamesForSelectBox();
         $team_names = Team::getNamesForSelectBox();
         return view('feedbacks.create', 
             compact('round', 'types', 'adj_names', 'team_names'));
+    }
+
+
+    public function createAdjToAdj($round_id) {
+        $round = Round::findOrFail($round_id);
+        $types = Feedback::getTypes();
+        $adj_names = Adjudicator::getNamesForSelectBox();
+        return view('feedbacks.create', 
+            compact('round', 'types', 'adj_names'));
     }
 
     public function store(Request $request) {
