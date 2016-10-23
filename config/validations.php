@@ -3,7 +3,7 @@
 return [
     'adjudicators' => [
         'name' => 'required|unique:adjudicators,name',
-        'test_score' => 'required|between:0,10',
+        'test_score' => 'required|numeric|between:0,10',
         'active' => 'required|boolean',
     ],
 
