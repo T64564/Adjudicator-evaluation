@@ -21,6 +21,9 @@
     {{ Form::hidden('round_id', $round->id, ['class' => 'form-control']) }}
 </div>
 <div class="form-group">
+    {{ Form::hidden('page_from', 'team_to_adj', ['class' => 'form-control']) }}
+</div>
+<div class="form-group">
     {{ Form::label('type', 'Type:') }}
     {{ Form::select('type', $types,
     null,

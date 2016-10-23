@@ -13,7 +13,6 @@
 <hr/>
 @include('errors.form_errors')
 {!! Form::open(['route' => 'feedbacks.store']) !!}
-{{-- @include('feedbacks.form', ['submitButton' => 'Create']) --}}
 
 <div class="form-group">
     {{ Form::hidden('id', null, ['class' => 'form-control']) }}
@@ -22,11 +21,13 @@
     {{ Form::hidden('round_id', $round->id, ['class' => 'form-control']) }}
 </div>
 <div class="form-group">
+    {{ Form::hidden('page_from', 'adj_to_adj', ['class' => 'form-control']) }}
+</div>
+<div class="form-group">
     {{ Form::label('type', 'Type:') }}
     {{ Form::select('type', $types,
     null,
-    ['id' => 'type', 'class' => 'form-control', 
-    'onchange' => 'updateEvaluator(this.value)']) }}
+    ['id' => 'type', 'class' => 'form-control'] }}
 </div>
 <div class="form-group">
     {{ Form::label('evaluator_id', 'Evaluator:') }}

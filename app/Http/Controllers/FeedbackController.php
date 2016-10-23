@@ -112,4 +112,12 @@ class FeedbackController extends Controller {
             ->withErrors($errors);
     }
 
+    private function redirectTo($from_page) {
+        if ($from_page === 'adj_to_adj') {
+            return 'feedbacks.create_adj_to_adj';
+        } elseif ($from_page === 'team_to_adj') {
+            return 'feedbacks.create_adj_to_adj';
+        }
+        return '';
+    }
 }
