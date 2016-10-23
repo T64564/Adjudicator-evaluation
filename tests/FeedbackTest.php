@@ -32,6 +32,12 @@ class FeedbackTest extends TestCase {
             ['type' => 0, 'round_id' => $this->round->id,
             'evaluator_id' => $this->team->id, 'evaluatee_id' => $this->adjudicator->id,
             'score' => 10]);
+        $this->visit('/feedbacks/1/create_team_to_adj')
+            ->select($this->team->id, 'evaluator_id')
+            ->select($this->adjudicator->id, 'evaluatee_id')
+            ->type(10, 'score')
+            ->press('Create')
+            ->seePageIs('feedbacks/1/create_team_to_adj');
 
         $this->visit('/feedbacks/1/create_adj_to_adj')
             ->select($this->adjudicator->id, 'evaluator_id')
@@ -44,5 +50,11 @@ class FeedbackTest extends TestCase {
             'evaluator_id' => $this->adjudicator->id, 'evaluatee_id' => $this->adjudicator2->id,
             'score' => 10]);
 
+        $this->visit('/feedbacks/1/create_adj_to_adj')
+            ->select($this->adjudicator->id, 'evaluator_id')
+            ->select($this->adjudicator2->id, 'evaluatee_id')
+            ->type(10, 'score')
+            ->press('Create')
+            ->seePageIs('feedbacks/1/create_adj_to_adj');
     }
 }
