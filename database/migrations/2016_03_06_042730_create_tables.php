@@ -60,9 +60,9 @@ class CreateTables extends Migration
     public function down()
     {
         //
-        Schema::drop('adjudicators');
+        Schema::drop('feedbacks');
         Schema::drop('teams');
         Schema::drop('rounds');
-        Schema::drop('feedbacks');
+        Schema::drop('adjudicators');
     }
 }

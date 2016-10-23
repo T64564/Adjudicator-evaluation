@@ -2,6 +2,18 @@
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
+
+    public function setUp()
+    {
+        parent::setUp();
+        Artisan::call('migrate');
+    }
+
+    public function tearDown()
+    {
+        Artisan::call('migrate:reset');
+        parent::tearDown();
+    }
     /**
      * The base URL to use while testing the application.
      *
