@@ -55,16 +55,23 @@ class AdjudicatorTest extends TestCase {
     public function testValidationCreate() {
         $names = ['', 'AAAA', 'AAAA'];
         $scores = [1, -1, 'a'];
+        $actives = [true, false, true];
 
         for ($i = 0; $i < count($names); $i++) {
             $this->visit('/adjudicators/create')
                 ->type($names[$i], 'name')
-                ->type($scores[$i], 'test_score')
-                ->check('active')
-                ->press('Create')
+                ->type($scores[$i], 'test_score');
+            if ($actives[$i]) {
+                $this->check('active');
+            } else {
+                $this->uncheck('active');
+            }
+            $this->press('Create')
                 ->seePageIs('/adjudicators/create');
             $this->dontSeeInDatabase('adjudicators',
-                ['name' => $names[$i], 'test_score' => $scores[$i]]);
+                ['name' => $names[$i], 
+                'test_score' => $scores[$i], 
+                'active' => $actives[$i]]);
         }
     }
 
@@ -72,16 +79,23 @@ class AdjudicatorTest extends TestCase {
         Adjudicator::create(['name' => 'AAAA', 'test_score' => 5, 'active' => true]);
         $names = ['', 'AAAA', 'AAAA'];
         $scores = [1, -1, 'a'];
+        $actives = [true, false, true];
 
         for ($i = 0; $i < count($names); $i++) {
             $this->visit('/adjudicators/1/edit')
                 ->type($names[$i], 'name')
-                ->type($scores[$i], 'test_score')
-                ->check('active')
-                ->press('Edit')
+                ->type($scores[$i], 'test_score');
+            if ($actives[$i]) {
+                $this->check('active');
+            } else {
+                $this->uncheck('active');
+            }
+            $this->press('Edit')
                 ->seePageIs('/adjudicators/1/edit');
             $this->dontSeeInDatabase('adjudicators',
-                ['name' => $names[$i], 'test_score' => $scores[$i]]);
+                ['name' => $names[$i], 
+                'test_score' => $scores[$i], 
+                'active' => $actives[$i]]);
         }
     }
 }
