@@ -8,7 +8,7 @@ use App\Http\Models\Round;
 
 class RoundTest extends TestCase {
     public function testCreateEdit() {
-        $names = ['R1', 'R2', 'R3'];
+        $names = ['AAA', 'BBB', 'CCC'];
         $silents = [true, true, false];
         for ($i = 0; $i < count($names); $i++) {
             $this->visit('/rounds/create')
@@ -62,9 +62,9 @@ class RoundTest extends TestCase {
     }
 
     public function testValidationEdit() {
-        Round::create(['name' => 'AAAA', 'silent' => false]);
-        Round::create(['name' => 'BBBB', 'silent' => false]);
-        $names = ['', 'BBBB'];
+        Round::create(['name' => 'AAA', 'silent' => false]);
+        Round::create(['name' => 'BBB', 'silent' => false]);
+        $names = ['', 'BBB'];
         $silents = [false, false];
 
         for ($i = 0; $i < count($names); $i++) {

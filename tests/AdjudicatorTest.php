@@ -78,9 +78,9 @@ class AdjudicatorTest extends TestCase {
     }
 
     public function testValidationEdit() {
-        Adjudicator::create(['name' => 'AAAA', 'test_score' => 5, 'active' => true]);
-        Adjudicator::create(['name' => 'BBBB', 'test_score' => 5, 'active' => true]);
-        $names = ['', 'BBBB', 'AAAA', 'AAAA'];
+        Adjudicator::create(['name' => 'AAA', 'test_score' => 5, 'active' => true]);
+        Adjudicator::create(['name' => 'BBB', 'test_score' => 5, 'active' => true]);
+        $names = ['', 'BBB', 'AAA', 'AAA'];
         $scores = [1, 5, -1, 'a'];
         $actives = [true, true, false, true];
 
