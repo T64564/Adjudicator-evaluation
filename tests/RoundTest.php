@@ -48,20 +48,24 @@ class RoundTest extends TestCase {
 
     public function testValidationCreate() {
         $names = [''];
+        $silents = [true, false];
         for ($i = 0; $i < count($names); $i++) {
             $this->visit('/rounds/create')
                 ->type($names[$i], 'name')
                 ->check('silent')
                 ->press('Create')
                 ->seePageIs('/rounds/create');
-            $this->dontSeeInDatabase('rounds',
-                ['name' => $names[$i]]);
+            $this->dontSeeInDatabase('rounds', 
+                ['name' => $names[$i],
+                'silent' => $silents[$i]]);
         }
     }
 
     public function testValidationEdit() {
-        Round::create(['name' => 'AAAA', 'silent' => true]);
-        $names = [''];
+        Round::create(['name' => 'AAAA', 'silent' => false]);
+        Round::create(['name' => 'BBBB', 'silent' => false]);
+        $names = ['', 'BBBB'];
+        $silents = [false, false];
 
         for ($i = 0; $i < count($names); $i++) {
             $this->visit('/rounds/1/edit')
@@ -69,8 +73,10 @@ class RoundTest extends TestCase {
                 ->check('silent')
                 ->press('Edit')
                 ->seePageIs('/rounds/1/edit');
-            $this->dontSeeInDatabase('rounds',
-                ['name' => $names[$i]]);
+            $this->dontSeeInDatabase('rounds', 
+                ['id' => 1,
+                'name' => $names[$i],
+                'silent' => $silents[$i]]);
         }
     }
 }
