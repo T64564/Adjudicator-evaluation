@@ -29,9 +29,10 @@ class FeedbackTest extends TestCase {
             ->type(10, 'score')
             ->press('Create')
             ->seePageIs('feedbacks/1/enter_results');
-        $this->seeInDatabase('feedbacks', 
-            ['type' => 0, 'round_id' => $this->round->id,
-            'evaluator_id' => $this->team1->id, 'evaluatee_id' => $this->adjudicator1->id,
+        $this->seeInDatabase('feedbacks', [
+            'type' => 0, 'round_id' => $this->round->id,
+            'evaluator_id' => $this->team1->id, 
+            'evaluatee_id' => $this->adjudicator1->id,
             'score' => 10]);
         $this->visit('/feedbacks/1/create_team_to_adj')
             ->select($this->team1->id, 'evaluator_id')

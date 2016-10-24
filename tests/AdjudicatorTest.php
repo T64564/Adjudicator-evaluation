@@ -23,8 +23,8 @@ class AdjudicatorTest extends TestCase {
             $this->press('Create')
                 ->seePageIs('/adjudicators');
 
-            $this->seeInDatabase('adjudicators', 
-                ['name' => $names[$i], 
+            $this->seeInDatabase('adjudicators', [
+                'name' => $names[$i], 
                 'test_score' => $scores[$i], 
                 'active' => $actives[$i]]);
         }
@@ -45,8 +45,8 @@ class AdjudicatorTest extends TestCase {
             $this->press('Edit')
                 ->seePageIs('/adjudicators');
 
-            $this->seeInDatabase('adjudicators', 
-                ['id' => $adjudicators[$i]->id,
+            $this->seeInDatabase('adjudicators', [
+                'id' => $adjudicators[$i]->id,
                 'name' => $names[$i], 
                 'test_score' => $scores[$i], 
                 'active' => $actives[$i]]);
@@ -69,8 +69,8 @@ class AdjudicatorTest extends TestCase {
             }
             $this->press('Create')
                 ->seePageIs('/adjudicators/create');
-            $this->dontSeeInDatabase('adjudicators',
-                ['id' => 1,
+            $this->dontSeeInDatabase('adjudicators', [
+                'id' => 1,
                 'name' => $names[$i], 
                 'test_score' => $scores[$i], 
                 'active' => $actives[$i]]);
@@ -95,8 +95,8 @@ class AdjudicatorTest extends TestCase {
             }
             $this->press('Edit')
                 ->seePageIs('/adjudicators/1/edit');
-            $this->dontSeeInDatabase('adjudicators',
-                ['id' => 1,
+            $this->dontSeeInDatabase('adjudicators', [
+                'id' => 1,
                 'name' => $names[$i], 
                 'test_score' => $scores[$i], 
                 'active' => $actives[$i]]);
