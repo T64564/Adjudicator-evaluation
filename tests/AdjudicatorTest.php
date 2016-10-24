@@ -8,26 +8,48 @@ use App\Http\Models\Adjudicator;
 
 class AdjudicatorTest extends TestCase {
     public function testCreateEdit() {
-        $name = 'AAAA';
-        $score = 5;
-        $this->visit('/adjudicators/create')
-            ->type($name, 'name')
-            ->type($score, 'test_score')
-            ->check('active')
-            ->press('Create')
-            ->seePageIs('/adjudicators');
+        $names = ['AAA', 'BBB', 'CCC'];
+        $scores = [1, 2, 3];
+        $actives = [true, true, false];
+        for ($i = 0; $i < count($names); $i++) {
+            $this->visit('/adjudicators/create')
+                ->type($names[$i], 'name')
+                ->type($scores[$i], 'test_score');
+            if ($actives[$i]) {
+                $this->check('active');
+            } else {
+                $this->uncheck('active');
+            }
+            $this->press('Create')
+                ->seePageIs('/adjudicators');
 
-        $this->seeInDatabase('adjudicators', ['name' => $name, 'test_score' => $score, 'active' => true]);
+            $this->seeInDatabase('adjudicators', 
+                ['name' => $names[$i], 
+                'test_score' => $scores[$i], 
+                'active' => $actives[$i]]);
+        }
 
-        $name = 'XXXX';
-        $score = 8;
-        $this->visit('/adjudicators/1/edit/')
-            ->type($name, 'name')
-            ->type($score, 'test_score')
-            ->check('active')
-            ->press('Edit')
-            ->seePageIs('/adjudicators');
-        $this->seeInDatabase('adjudicators', ['name' => $name, 'test_score' => $score, 'active' => true]);
+        $names = ['AAA', 'BBB', 'DDD'];
+        $scores = [1, 3, 4];
+        $actives = [true, false, true];
+        $adjudicators = Adjudicator::all();
+        for ($i = 0; $i < count($names); $i++) {
+            $this->visit('/adjudicators/'. $adjudicators[$i]->id .'/edit/')
+                ->type($names[$i], 'name')
+                ->type($scores[$i], 'test_score');
+            if ($actives[$i]) {
+                $this->check('active');
+            } else {
+                $this->uncheck('active');
+            }
+            $this->press('Edit')
+                ->seePageIs('/adjudicators');
+
+            $this->seeInDatabase('adjudicators', 
+                ['name' => $names[$i],
+                'test_score' => $scores[$i],
+                'active' => $actives[$i]]);
+        }
     }
 
     public function testValidationCreate() {
