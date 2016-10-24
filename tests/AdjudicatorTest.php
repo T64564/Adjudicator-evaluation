@@ -17,6 +17,8 @@ class AdjudicatorTest extends TestCase {
                 ->type($scores[$i], 'test_score');
             if ($actives[$i]) {
                 $this->check('active');
+            } else {
+                $this->uncheck('active');
             }
             $this->press('Create')
                 ->seePageIs('/adjudicators');
@@ -30,12 +32,15 @@ class AdjudicatorTest extends TestCase {
         $names = ['AAA', 'BBB', 'DDD'];
         $scores = [1, 3, 4];
         $actives = [true, false, true];
+        $adjudicators = Adjudicator::all();
         for ($i = 0; $i < count($names); $i++) {
-            $this->visit('/adjudicators/'. (Adjudicator::first()->id) .'/edit/')
+            $this->visit('/adjudicators/'. $adjudicators[$i]->id .'/edit/')
                 ->type($names[$i], 'name')
                 ->type($scores[$i], 'test_score');
             if ($actives[$i]) {
                 $this->check('active');
+            } else {
+                $this->uncheck('active');
             }
             $this->press('Edit')
                 ->seePageIs('/adjudicators');
