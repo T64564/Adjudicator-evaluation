@@ -75,13 +75,31 @@ class FeedbackTest extends TestCase {
             ->seePageIs('feedbacks/1/create_team_to_adj');
         $this->assertEquals(1, Feedback::count());
 
-
         Feedback::create([
             'type' => 1, 'round_id' => 1,
             'evaluator_id' => $this->adjudicator1->id,
             'evaluatee_id' => $this->adjudicator2->id, 'score' => 5]);
-        /* combi (type, adj1 -> adj2) is unique*/
+
         $this->visit('/feedbacks/1/create_adj_to_adj')
+            ->select(1, 'type')
+            ->select($this->adjudicator1->id, 'evaluator_id')
+            ->select($this->adjudicator2->id, 'evaluatee_id')
+            ->type(10, 'score')
+            ->press('Create')
+            ->seePageIs('feedbacks/1/create_adj_to_adj');
+        $this->assertEquals(2, Feedback::count());
+
+        $this->visit('/feedbacks/1/create_adj_to_adj')
+            ->select(2, 'type')
+            ->select($this->adjudicator1->id, 'evaluator_id')
+            ->select($this->adjudicator2->id, 'evaluatee_id')
+            ->type(10, 'score')
+            ->press('Create')
+            ->seePageIs('feedbacks/1/create_adj_to_adj');
+        $this->assertEquals(2, Feedback::count());
+
+        $this->visit('/feedbacks/1/create_adj_to_adj')
+            ->select(3, 'type')
             ->select($this->adjudicator1->id, 'evaluator_id')
             ->select($this->adjudicator2->id, 'evaluatee_id')
             ->type(10, 'score')
