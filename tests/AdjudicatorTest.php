@@ -46,8 +46,9 @@ class AdjudicatorTest extends TestCase {
                 ->seePageIs('/adjudicators');
 
             $this->seeInDatabase('adjudicators', 
-                ['name' => $names[$i],
-                'test_score' => $scores[$i],
+                ['id' => $adjudicators[$i]->id,
+                'name' => $names[$i], 
+                'test_score' => $scores[$i], 
                 'active' => $actives[$i]]);
         }
     }
@@ -55,33 +56,50 @@ class AdjudicatorTest extends TestCase {
     public function testValidationCreate() {
         $names = ['', 'AAAA', 'AAAA'];
         $scores = [1, -1, 'a'];
+        $actives = [true, false, true];
 
         for ($i = 0; $i < count($names); $i++) {
             $this->visit('/adjudicators/create')
                 ->type($names[$i], 'name')
-                ->type($scores[$i], 'test_score')
-                ->check('active')
-                ->press('Create')
+                ->type($scores[$i], 'test_score');
+            if ($actives[$i]) {
+                $this->check('active');
+            } else {
+                $this->uncheck('active');
+            }
+            $this->press('Create')
                 ->seePageIs('/adjudicators/create');
             $this->dontSeeInDatabase('adjudicators',
-                ['name' => $names[$i], 'test_score' => $scores[$i]]);
+                ['id' => 1,
+                'name' => $names[$i], 
+                'test_score' => $scores[$i], 
+                'active' => $actives[$i]]);
         }
     }
 
     public function testValidationEdit() {
-        Adjudicator::create(['name' => 'AAAA', 'test_score' => 5, 'active' => true]);
-        $names = ['', 'AAAA', 'AAAA'];
-        $scores = [1, -1, 'a'];
+        Adjudicator::create(['name' => 'AAA', 'test_score' => 5, 'active' => true]);
+        Adjudicator::create(['name' => 'BBB', 'test_score' => 5, 'active' => true]);
+        $names = ['', 'BBB', 'AAA', 'AAA'];
+        $scores = [1, 5, -1, 'a'];
+        $actives = [true, true, false, true];
 
         for ($i = 0; $i < count($names); $i++) {
             $this->visit('/adjudicators/1/edit')
                 ->type($names[$i], 'name')
-                ->type($scores[$i], 'test_score')
-                ->check('active')
-                ->press('Edit')
+                ->type($scores[$i], 'test_score');
+            if ($actives[$i]) {
+                $this->check('active');
+            } else {
+                $this->uncheck('active');
+            }
+            $this->press('Edit')
                 ->seePageIs('/adjudicators/1/edit');
             $this->dontSeeInDatabase('adjudicators',
-                ['name' => $names[$i], 'test_score' => $scores[$i]]);
+                ['id' => 1,
+                'name' => $names[$i], 
+                'test_score' => $scores[$i], 
+                'active' => $actives[$i]]);
         }
     }
 }
