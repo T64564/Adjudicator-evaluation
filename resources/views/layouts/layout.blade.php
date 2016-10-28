@@ -4,6 +4,7 @@
     <title>Adjudicators evaludation</title>
     <link rel="stylesheet" href="{{ URL::asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('css/table.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('css/navbar.css') }}">
 </head>
 <body>
     @include('layouts.navbar')
