@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <title>Adjudicators evaludation</title>
     <link rel="stylesheet" href="{{ URL::asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('css/table.css') }}">
 </head>
 <body>
     @include('layouts.navbar')
