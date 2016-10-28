@@ -5,17 +5,20 @@ th {
 .table>thead:first-child>tr:first-child>th {
   border:2px solid #808080;
   cursor: pointer; 
+  background-repeat: no-repeat;
+  background-position: center right;
 }
 
 th.headerSortDown { 
-    background-image: url(../img/small_desc.gif); 
+    background-image: url('../img/desc.gif'); 
     background-color: #3399FF; 
-} 
+}
+
 
 th.headerSortUp { 
-    background-image: url(../img/small_asc.gif); 
+    background-image: url('../img/asc.gif'); 
     background-color: #3399FF; 
-} 
+}
 
 td {
   font-size: 20px;
