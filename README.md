@@ -11,7 +11,7 @@
     $ php artisan migrate  
     ```
     もしくは，`database/migrations/migration.sql`をDBに対して実行．
-    
+
 4. サーバーを起動
     ```
     $ php -S localhost:8000 -t public  
@@ -28,6 +28,11 @@
     file_get_contents(****): failed to open stream: Permission denied
     ```
      - 上エラーのようにPermission deniedと表示される場合は`$ sudo chmod -R 777 bootstrap/cache`，`$ sudo chmod -R 777 storage`を実行して下さい．
+
+## TODO
+* XAMPP同封版にしてTabbieみたいにダウンロードのあとすぐ使えるようにしたい．
+* バックアップ，リストアをアプリケーション上で出来るようにしたい．
+* Tabbie, tabbycatのデータベースと連携出来るようにしたい．
 
 ## Authors and Contact
 - Daigo Kimura(木村大吾) ([e-mail](a91381@gmail.com))
