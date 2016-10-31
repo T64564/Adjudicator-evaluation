@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Models\Adjudicator;
 
 class AdjudicatorTest extends TestCase {
-    public function testCreateEdit() {
+    public function testCreateEditDelete() {
         $names = ['AAA', 'BBB', 'CCC'];
         $scores = [1, 2, 3];
         $actives = [true, true, false];
@@ -46,6 +46,18 @@ class AdjudicatorTest extends TestCase {
                 ->seePageIs('/adjudicators');
 
             $this->seeInDatabase('adjudicators', [
+                'id' => $adjudicators[$i]->id,
+                'name' => $names[$i], 
+                'test_score' => $scores[$i], 
+                'active' => $actives[$i]]);
+        }
+
+        for ($i = 0; $i < count($names); $i++) {
+            $this->visit('/adjudicators')
+                ->press('Delete')
+                ->seePageIs('/adjudicators');
+
+            $this->dontSeeInDatabase('adjudicators', [
                 'id' => $adjudicators[$i]->id,
                 'name' => $names[$i], 
                 'test_score' => $scores[$i], 
