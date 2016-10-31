@@ -2,23 +2,33 @@ th {
   font-size: 16px;
 }
 
+.table>thead:first-child>tr:first-child>th:before {
+  content: "\f07d";
+  font-family: FontAwesome;
+}
+
 .table>thead:first-child>tr:first-child>th {
   border:2px solid #808080;
   cursor: pointer; 
-  background-image: url(../img/bg.gif); 
-  background-repeat: no-repeat;
-  background-position: center right;
-  background-size: 24px 8px;
+}
+
+.table>thead:first-child>tr:first-child>th.headerSortDown:before { 
+  content: "\f160";
+  font-family: FontAwesome;
 }
 
 .table>thead:first-child>tr:first-child>th.headerSortDown { 
-  background-image: url(../img/desc.gif); 
+  /* background-image: url(../img/desc.gif);  */
   background-color: #3399FF; 
 }
 
 
+.table>thead:first-child>tr:first-child>th.headerSortUp:before { 
+  content: "\f161";
+  font-family: FontAwesome;
+}
+
 .table>thead:first-child>tr:first-child>th.headerSortUp { 
-  background-image: url(../img/asc.gif); 
   background-color: #3399FF; 
 }
 
