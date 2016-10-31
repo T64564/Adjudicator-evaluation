@@ -39,5 +39,6 @@
     <script src="{{ URL::asset('js/jquery-1.12.1.min.js') }}"></script>
     <script src="{{ URL::asset('js/jquery.tablesorter.js') }}"></script>
     <script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ URL::asset('js/helper.js') }}"></script>
 </body>
 </html>

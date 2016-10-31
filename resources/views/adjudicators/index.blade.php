@@ -55,7 +55,8 @@ window.onload = function() {
             </td>
             <td>
                 {{ Form::open(['method' => 'DELETE', 
-                'url' => ['adjudicators', $adj->id]]) }}
+                    'url' => ['adjudicators', $adj->id],
+                'onsubmit' => 'return confirmDelete()']) }}
                 {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
                 {{ Form::close() }}
             </td>
