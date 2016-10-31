@@ -52,7 +52,8 @@ window.onload = function() {
             </td>
             <td>
                 {{ Form::open(['method' => 'DELETE', 
-                'url' => ['teams', $team->id]]) }}
+                    'url' => ['teams', $team->id],
+                'onsubmit' => 'return confirmDelete()']) }}
                 {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
                 {{ Form::close() }}
             </td>

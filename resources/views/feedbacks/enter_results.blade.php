@@ -55,7 +55,9 @@ window.onload = function() {
                 'Edit', ['class' => 'btn btn-primary']) }}
             </td>
             <td>
-                {{ Form::open(['method' => 'DELETE', 'url' => ['feedbacks', $round->id, $feedback->id]]) }}
+                {{ Form::open(['method' => 'DELETE',
+                    'url' => ['feedbacks', $round->id, $feedback->id],
+                'onsubmit' => 'return confirmDelete()']) }}
                 {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
                 {{ Form::close() }}
             </td>
