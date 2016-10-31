@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Models\Round;
 
 class RoundTest extends TestCase {
-    public function testCreateEdit() {
+    public function testCreateEditDelete() {
         $names = ['AAA', 'BBB', 'CCC'];
         $silents = [true, true, false];
         for ($i = 0; $i < count($names); $i++) {
@@ -21,8 +21,8 @@ class RoundTest extends TestCase {
             $this->press('Create')
                 ->seePageIs('/rounds');
 
-            $this->seeInDatabase('rounds', 
-                ['name' => $names[$i], 
+            $this->seeInDatabase('rounds', [
+                'name' => $names[$i], 
                 'silent' => $silents[$i]]);
         }
 
@@ -40,8 +40,18 @@ class RoundTest extends TestCase {
             $this->press('Edit')
                 ->seePageIs('/rounds');
 
-            $this->seeInDatabase('rounds', 
-                ['name' => $names[$i],
+            $this->seeInDatabase('rounds', [
+                'name' => $names[$i],
+                'silent' => $silents[$i]]);
+        }
+
+        for ($i = 0; $i < count($names); $i++) {
+            $this->visit('/rounds')
+                ->press('Delete')
+                ->seePageIs('/rounds');
+
+            $this->dontSeeInDatabase('rounds', [
+                'name' => $names[$i],
                 'silent' => $silents[$i]]);
         }
     }
@@ -55,8 +65,8 @@ class RoundTest extends TestCase {
                 ->check('silent')
                 ->press('Create')
                 ->seePageIs('/rounds/create');
-            $this->dontSeeInDatabase('rounds', 
-                ['name' => $names[$i],
+            $this->dontSeeInDatabase('rounds', [
+                'name' => $names[$i],
                 'silent' => $silents[$i]]);
         }
     }
@@ -73,8 +83,8 @@ class RoundTest extends TestCase {
                 ->check('silent')
                 ->press('Edit')
                 ->seePageIs('/rounds/1/edit');
-            $this->dontSeeInDatabase('rounds', 
-                ['id' => 1,
+            $this->dontSeeInDatabase('rounds', [
+                'id' => 1,
                 'name' => $names[$i],
                 'silent' => $silents[$i]]);
         }

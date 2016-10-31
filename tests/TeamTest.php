@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Models\Team;
 
 class TeamTest extends TestCase {
-    public function testCreateEdit() {
+    public function testCreateEditDelete() {
         $names = ['AAA', 'BBB', 'CCC'];
         $actives = [true, true, false];
         for ($i = 0; $i < count($names); $i++) {
@@ -21,8 +21,8 @@ class TeamTest extends TestCase {
             $this->press('Create')
                 ->seePageIs('/teams');
 
-            $this->seeInDatabase('teams', 
-                ['name' => $names[$i], 
+            $this->seeInDatabase('teams', [
+                'name' => $names[$i], 
                 'active' => $actives[$i]]);
         }
 
@@ -40,8 +40,18 @@ class TeamTest extends TestCase {
             $this->press('Edit')
                 ->seePageIs('/teams');
 
-            $this->seeInDatabase('teams', 
-                ['name' => $names[$i],
+            $this->seeInDatabase('teams', [
+                'name' => $names[$i],
+                'active' => $actives[$i]]);
+        }
+
+        for ($i = 0; $i < count($names); $i++) {
+            $this->visit('/teams')
+                ->press('Delete')
+                ->seePageIs('/teams');
+
+            $this->dontSeeInDatabase('teams', [
+                'name' => $names[$i],
                 'active' => $actives[$i]]);
         }
     }
@@ -60,8 +70,8 @@ class TeamTest extends TestCase {
             }
             $this->press('Create')
                 ->seePageIs('/teams/create');
-            $this->dontSeeInDatabase('teams',
-                ['name' => $names[$i], 
+            $this->dontSeeInDatabase('teams', [
+                'name' => $names[$i], 
                 'active' => $actives[$i]]);
         }
     }
@@ -82,8 +92,8 @@ class TeamTest extends TestCase {
             }
             $this->press('Edit')
                 ->seePageIs('/teams/1/edit');
-            $this->dontSeeInDatabase('teams',
-                ['id' => 1,
+            $this->dontSeeInDatabase('teams', [
+                'id' => 1,
                 'name' => $names[$i], 
                 'active' => $actives[$i]]);
         }

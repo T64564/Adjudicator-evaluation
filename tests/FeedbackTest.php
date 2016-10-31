@@ -22,7 +22,7 @@ class FeedbackTest extends TestCase {
             Adjudicator::create(['name' => 'A2', 'test_score' => 5, 'active' => true]);
     }
 
-    public function testCreate() {
+    public function testCreateDelete() {
         $this->visit('/feedbacks/1/create_team_to_adj')
             ->select($this->team1->id, 'evaluator_id')
             ->select($this->adjudicator1->id, 'evaluatee_id')
@@ -34,12 +34,6 @@ class FeedbackTest extends TestCase {
             'evaluator_id' => $this->team1->id, 
             'evaluatee_id' => $this->adjudicator1->id,
             'score' => 10]);
-        $this->visit('/feedbacks/1/create_team_to_adj')
-            ->select($this->team1->id, 'evaluator_id')
-            ->select($this->adjudicator1->id, 'evaluatee_id')
-            ->type(10, 'score')
-            ->press('Create')
-            ->seePageIs('feedbacks/1/create_team_to_adj');
 
         $this->visit('/feedbacks/1/create_adj_to_adj')
             ->select($this->adjudicator1->id, 'evaluator_id')
@@ -47,16 +41,25 @@ class FeedbackTest extends TestCase {
             ->type(10, 'score')
             ->press('Create')
             ->seePageIs('feedbacks/1/enter_results');
-        $this->seeInDatabase('feedbacks', 
-            ['type' => 1, 'round_id' => $this->round->id,
-            'evaluator_id' => $this->adjudicator1->id, 'evaluatee_id' => $this->adjudicator2->id,
+        $this->seeInDatabase('feedbacks', [
+            'type' => 1, 'round_id' => $this->round->id,
+            'evaluator_id' => $this->adjudicator1->id, 
+            'evaluatee_id' => $this->adjudicator2->id,
             'score' => 10]);
-        $this->visit('/feedbacks/1/create_adj_to_adj')
-            ->select($this->adjudicator1->id, 'evaluator_id')
-            ->select($this->adjudicator2->id, 'evaluatee_id')
-            ->type(10, 'score')
-            ->press('Create')
-            ->seePageIs('feedbacks/1/create_adj_to_adj');
+
+        $this->visit('/feedbacks/1/enter_results')
+            ->press('Delete')
+            ->seePageIs('feedbacks/1/enter_results');
+        $this->dontSeeInDatabase('feedbacks', [
+            'type' => 0, 'round_id' => $this->round->id,
+            'evaluator_id' => $this->team1->id, 
+            'evaluatee_id' => $this->adjudicator1->id,
+            'score' => 10]);
+        $this->seeInDatabase('feedbacks', [
+            'type' => 1, 'round_id' => $this->round->id,
+            'evaluator_id' => $this->adjudicator1->id, 
+            'evaluatee_id' => $this->adjudicator2->id,
+            'score' => 10]);
     }
 
     public function testValidation() {
