@@ -19,7 +19,6 @@
                     </a>
                 </li>
                 <li>
-
                     <a href={{ route('results.ranking') }}>
                     <i class="fa fa-trophy" aria-hidden="true"></i>
                     Results

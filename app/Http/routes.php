@@ -84,4 +84,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('adjudicators', 'AdjudicatorController');
     Route::resource('teams', 'TeamController');
     Route::resource('rounds', 'RoundController');
+
+    Route::get('backups/import',
+        ['as' => 'backups.import',
+        'uses' => 'ResultController@ranking']);
+
 });
