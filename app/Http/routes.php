@@ -87,6 +87,6 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('backups/import',
         ['as' => 'backups.import',
-        'uses' => 'ResultController@ranking']);
+        'uses' => 'BackupController@import']);
 
 });
