@@ -118,8 +118,7 @@ Route::group(['middleware' => ['web']], function () {
         $db_pass = env('DB_PASSWORD', '');
         $cmd = '/Applications/XAMPP/bin/mysql -u' 
             . $db_user . ' -p' . $db_pass . ' adjudicator_evaluation < ' . $move;
-        echo $move;
-        echo "\n";
         echo exec($cmd);
+        return redirect()->route('restore');
     });
 });
