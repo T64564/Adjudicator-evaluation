@@ -90,7 +90,7 @@ Route::group(['middleware' => ['web']], function () {
         $db_user = env('DB_USERNAME', 'root');
         $db_pass = env('DB_PASSWORD', '');
         $cmd = '/Applications/XAMPP/bin/mysqldump -u' 
-            . $db_user . ' -p' . $db_pass . ' tabbie';
+            . $db_user . ' -p' . $db_pass . ' adjudicator_evaluation';
         $output = shell_exec($cmd);
         $file_name = 'dump.sql';
         $headers = array(
