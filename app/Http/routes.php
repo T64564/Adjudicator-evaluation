@@ -117,7 +117,9 @@ Route::group(['middleware' => ['web']], function () {
         $db_user = env('DB_USERNAME', 'root');
         $db_pass = env('DB_PASSWORD', '');
         $cmd = '/Applications/XAMPP/bin/mysql -u' 
-            . $db_user . ' -p' . $db_pass . ' adjudicator_evaluation < ' . $fileName;
-        exec($cmd);
+            . $db_user . ' -p' . $db_pass . ' adjudicator_evaluation < ' . $move;
+        echo $move;
+        echo "\n";
+        echo exec($cmd);
     });
 });
