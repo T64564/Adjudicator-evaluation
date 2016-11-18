@@ -89,4 +89,22 @@ Route::group(['middleware' => ['web']], function () {
         ['as' => 'backups.import',
         'uses' => 'BackupController@import']);
 
+    Route::get('/backup', function () {
+        $db_user = env('DB_USERNAME', 'root');
+        $db_pass = env('DB_PASSWORD', '');
+        $cmd = '/Applications/XAMPP/bin/mysqldump -u' 
+            . $db_user . ' -p' . $db_pass . ' tabbie';
+        $output = shell_exec($cmd);
+        $file_name = 'dump.sql';
+        $headers = array(
+            'Content-Type' => 'text/sql',
+            'Content-Disposition' => "attachment; filename=$file_name",
+        );
+        return \Response::make($output, 200, $headers);
+    });
+
+    Route::get('/restore', function () {
+        return view('restore');
+    });
+
 });
