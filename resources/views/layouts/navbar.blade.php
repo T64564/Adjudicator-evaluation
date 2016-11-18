@@ -52,6 +52,18 @@
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href={{ route('backup') }}>
+                        <i class="fa fa-download" aria-hidden="true"></i>
+                        Backup
+                    </a>
+                </li>
+                <li>
+                    <a href={{ route('restore') }}>
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                        Restore
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

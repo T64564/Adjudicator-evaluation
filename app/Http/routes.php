@@ -86,7 +86,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('rounds', 'RoundController');
 
 
-    Route::get('backup', function () {
+    Route::get('backup', ['as' => 'backup', function () {
         $db_user = env('DB_USERNAME', 'root');
         $db_pass = env('DB_PASSWORD', '');
         $cmd = '/Applications/XAMPP/bin/mysqldump -u' 
@@ -98,7 +98,7 @@ Route::group(['middleware' => ['web']], function () {
             'Content-Disposition' => "attachment; filename=$file_name",
         );
         return \Response::make($output, 200, $headers);
-    });
+    }]);
 
     Route::get('restore', ['as' => 'restore', function () {
         return view('restore');
