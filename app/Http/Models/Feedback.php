@@ -139,7 +139,7 @@ class Feedback extends Model {
      * infomation
      * - 
      */
-    public static function checkConsistency($round_id, &$info, &$errors) {
+    public static function checkConsistencyAsian($round_id, &$info, &$warning, &$errors) {
         $info = [];
         $errors = [];
         $adjs = Adjudicator::where('active', 1)->get();
@@ -149,21 +149,21 @@ class Feedback extends Model {
 
         foreach ($teams as $team) {
             if ($round->silent == 0) {
-            $count = $fbs->where('type', 0)->where('evaluator_id', $team->id)->count();
-            if ($count == 0) {
-                $errors[] = $team->name 
-                    . ' doesn\'t evaluate anyone.';
+                $count = $fbs->where('type', 0)->where('evaluator_id', $team->id)->count();
+                if ($count == 0) {
+                    $errors[] = $team->name 
+                        . ' doesn\'t evaluate anyone.';
+                }
+                if ($count > 1) {
+                    $errors[] = $team->name 
+                        . ' evaluate ' . $count . ' times.';
+                }
+            } else {
+                if ($fbs->where('type', 0)->contains('evaluator_id', $team->id)) {
+                    $errors[] = $team->name 
+                        . ' may not evaluate anyone in a silent round.';
+                }
             }
-            if ($count > 1) {
-                $errors[] = $team->name 
-                    . ' evaluate ' . $count . ' times.';
-            }
-        } else {
-            if ($fbs->where('type', 0)->contains('evaluator_id', $team->id)) {
-                $errors[] = $team->name 
-                    . ' may not evaluate anyone in a silent round.';
-            }
-        }
         }
 
         foreach ($adjs as $adj) {
@@ -302,7 +302,9 @@ class Feedback extends Model {
                     . '), but the chair hasn\'t evaluate the panelist.';
             }
         }
+    }
 
-        return $errors;
+    public static function checkConsistencyBp($round_id, &$info, &$warning, &$errors) {
+        return Feedback::checkConsistencyAsian($round_id, $info, $warning, $errors);
     }
 }

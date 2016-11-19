@@ -12,8 +12,10 @@ window.onload = function() {
     <div style="text-align:left">
         Feedback {{ $round->name }}
         <div style="float:right">
-            {!! link_to('feedbacks/' . $round->id . '/check',
-            'Check', ['class' => 'btn btn-primary']) !!}    
+            {!! link_to('feedbacks/' . $round->id . '/check_asian',
+            'Check Asian', ['class' => 'btn btn-primary']) !!}    
+            {!! link_to('feedbacks/' . $round->id . '/check_bp',
+            'Check BP', ['class' => 'btn btn-primary']) !!}    
             {!! link_to('feedbacks/' . $round->id . '/create_team_to_adj',
             'Add new [ Team -> Adjudicator ]', ['class' => 'btn btn-primary']) !!}    
             {!! link_to('feedbacks/' . $round->id . '/create_adj_to_adj',

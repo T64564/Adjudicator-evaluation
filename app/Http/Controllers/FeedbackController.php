@@ -117,10 +117,22 @@ class FeedbackController extends Controller {
             ['round_id' => $round_id]);
     }
 
-    public function check($round_id) {
-        Feedback::checkConsistency($round_id, $info, $errors);
+    public function checkAsian($round_id) {
+        Feedback::checkConsistencyAsian($round_id, $info, $warning, $errors);
+        return $this->check($round_id, $info, $warning, $errors);
+    }
+
+    public function checkBp($round_id) {
+        Feedback::checkConsistencyBp($round_id, $info, $warning, $errors);
+        return $this->check($round_id, $info, $warning, $errors);
+    }
+
+    private function check($round_id, $info, $warning, $errors) {
         if (!empty($info)) {
             \Session::flash('flash_info', $info);
+        }
+        if (!empty($warning)) {
+            \Session::flash('flash_warning', $warning);
         }
         return redirect()
             ->route('feedbacks.enter_results', ['round_id' => $round_id])

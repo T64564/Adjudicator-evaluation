@@ -70,9 +70,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::delete('feedbacks/{round}/{feedback}',
         ['as' => 'feedbacks.destroy',
         'uses' => 'FeedbackController@destroy']);
-    Route::get('feedbacks/{round}/check',
-        ['as' => 'feedbacks.check',
-        'uses' => 'FeedbackController@check']);
+    Route::get('feedbacks/{round}/check_asian',
+        ['as' => 'feedbacks.check_asian',
+        'uses' => 'FeedbackController@checkAsian']);
+    Route::get('feedbacks/{round}/check_bp',
+        ['as' => 'feedbacks.check_bp',
+        'uses' => 'FeedbackController@checkBp']);
 
     Route::get('results/ranking',
         ['as' => 'results.ranking',

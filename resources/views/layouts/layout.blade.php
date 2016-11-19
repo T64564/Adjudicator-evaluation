@@ -18,12 +18,22 @@
 
         @if (Session::has('flash_info'))
             <?php
-            $flash_info = Session::get('flash_info')
+                $flash_info = Session::get('flash_info');
             ?>
             <div class="alert alert-info">
                 <ul>
-                    @foreach($flash_info as $inf)
+                    @foreach(Session::get('flash_info') as $inf)
                         <li>{{ $inf }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if (Session::has('flash_warning'))
+            <div class="alert alert-warning">
+                <ul>
+                    @foreach(Session::get('flash_warning') as $warn)
+                        <li>{{ $warn }}</li>
                     @endforeach
                 </ul>
             </div>
