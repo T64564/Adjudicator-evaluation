@@ -54,6 +54,15 @@ window.onload = function() {
             <td>
                 {{ round($rankings->averages[$adjudicator->id]['feedback'], 5) }}
             </td>
+            <td>
+                {{ round($rankings->averages[$adjudicator->id]['4:6'], 5) }}
+            </td>
+            <td>
+                {{ round($rankings->averages[$adjudicator->id]['2:8'], 5) }}
+            </td>
+            <td>
+                {{ round($rankings->averages[$adjudicator->id]['ignore_test'], 5) }}
+            </td>
         </tr>
     @endforeach
 </table>

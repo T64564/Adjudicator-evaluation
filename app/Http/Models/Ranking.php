@@ -18,18 +18,18 @@ class Ranking {
     public $averages;
 
     public function __construct() {
-        $this->fillTestScores();
-        $this->fillAverages();
+        $this->getTestScores();
+        $this->getAverages();
     }
 
-    private function fillTestScores() {
+    private function getTestScores() {
         $adjudicators = Adjudicator::where('active', 1)->get();
         foreach ($adjudicators as $adjudicator) {
             $this->test_scores[$adjudicator->id] = $adjudicator->test_score;
         }
     }
 
-    private function fillAverages() {
+    private function getAverages() {
         $adjudicators = Adjudicator::where('active', 1)->get();
         $rounds = Round::get();
 
@@ -49,8 +49,26 @@ class Ranking {
                     $count++;
                 }
             } 
+
+            $test_score = $this->test_scores[$adjudicator->id];
+            $this->averages[$adjudicator->id]['4:6'] =
+                $count !== 0 ? 
+                $test_score * 0.4 + ($sum / $count) * 0.6
+                : 0;
+
+            $this->averages[$adjudicator->id]['2:8'] =
+                $count !== 0 ? 
+                $test_score * 0.2 + ($sum / $count) * 0.8
+                : 0;
+
+            $this->averages[$adjudicator->id]['ignore_test'] =
+                $count !== 0 ? 
+                $sum / $count
+                : 0;
+
             $sum += $this->test_scores[$adjudicator->id];
             $count++;
+
             $this->averages[$adjudicator->id]['round'] =
                 $count !== 0 ? $sum / $count : 0;
 
@@ -68,6 +86,7 @@ class Ranking {
         }
     }
 
+
     public function getTableHeader() {
         $rounds = Round::get();
         $heads = [];
@@ -78,6 +97,9 @@ class Ranking {
         }
         $heads[] = 'Avg of each avg of round';
         $heads[] = 'Avg of each feedback';
+        $heads[] = '(test:round) = (4:6)';
+        $heads[] = '(test:round) = (2:8)';
+        $heads[] = 'Ignore test score';
         return $heads;
     }
 
