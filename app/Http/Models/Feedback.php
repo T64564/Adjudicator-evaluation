@@ -39,7 +39,7 @@ class Feedback extends Model {
 
     public static function getListing($round_id) {
         $feedbacks = Feedback::where('round_id', $round_id)
-            ->orderBy('type')->get();
+            ->orderBy('id', 'desc')->get();
 
         foreach ($feedbacks as $feedback) {
             $feedback->type_name = $feedback->getTypeName($feedback->type);
