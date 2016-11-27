@@ -31,8 +31,9 @@ class FeedbackController extends Controller {
         $types = [ 0 => 'Team to oralist' ];
         $adj_names = Adjudicator::getNamesForSelectBox();
         $team_names = Team::getNamesForSelectBox();
-        return view('feedbacks.create_team_to_adj', 
-            compact('round', 'types', 'adj_names', 'team_names'));
+        $from_team = true;
+        return view('feedbacks.create', 
+            compact('round', 'from_team', 'types', 'adj_names', 'team_names'));
     }
 
 
@@ -44,8 +45,9 @@ class FeedbackController extends Controller {
             3 => 'Chair to trainee',
         ];
         $adj_names = Adjudicator::getNamesForSelectBox();
-        return view('feedbacks.create_adj_to_adj', 
-            compact('round', 'types', 'adj_names'));
+        $from_team = false;
+        return view('feedbacks.create', 
+            compact('round', 'from_team', 'types', 'adj_names'));
     }
 
     public function store(Request $request) {

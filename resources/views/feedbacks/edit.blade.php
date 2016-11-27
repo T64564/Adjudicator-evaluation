@@ -13,7 +13,11 @@
 @include('errors.form_errors')
 {{ Form::model($feedback, 
 ['method' => 'PATCH', 'route' => ['feedbacks.update', $feedback->id]]) }}
-@include('feedbacks.form', ['submitButton' => 'Edit']) 
+@if ($feedback->type === 0)
+    @include('feedbacks.form', ['type' => 'team_to_adj', 'submitButton' => 'Edit']) 
+@elseif (1 <= $feedback->type and $feedback->type <= 4)
+    @include('feedbacks.form', ['type' => 'adj_to_adj', 'submitButton' => 'Edit']) 
+@endif
 {{ Form::close() }}
 <hr/>
 @stop
