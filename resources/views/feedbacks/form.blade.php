@@ -8,8 +8,9 @@
     {{ Form::label('type', 'Type:') }}
     {{ Form::select('type', $types,
     null,
-    ['id' => 'type', 'class' => 'form-control', 
-    'tabindex' => '1']) }}
+    ['id' => 'type', 'class' => 'form-control']) }}
+    <!-- // ['id' => 'type', 'class' => 'form&#45;control',  -->
+    <!-- // 'tabindex' => '1']) }} -->
 </div>
 <div class="form-group">
     {{ Form::label('evaluator_id', 'Evaluator:') }}
