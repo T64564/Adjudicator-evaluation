@@ -27,7 +27,7 @@
     {{ Form::label('type', 'Type:') }}
     {{ Form::select('type', $types,
     null,
-    ['id' => 'type', 'class' => 'form-control']) }}
+    ['id' => 'type', 'tabindex' => '1', 'class' => 'form-control']) }}
 </div>
 <div class="form-group">
     {{ Form::label('evaluator_id', 'Evaluator:') }}
