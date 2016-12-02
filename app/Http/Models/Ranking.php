@@ -41,48 +41,47 @@ class Ranking {
                 $this->averages[$adjudicator->id][$round->id] = $avg;
             }
 
-            $sum = 0; 
-            $count = 0;
+            $sum_score_round = 0; 
+            $n_round = 0;
+            $test_score = $this->test_scores[$adjudicator->id];
+
             foreach ($this->averages[$adjudicator->id] as $avg) {
                 if (isset($avg)) {
-                    $sum += $avg;
-                    $count++;
+                    $sum_score_round += $avg;
+                    $n_round += 1;
                 }
             } 
 
-            $test_score = $this->test_scores[$adjudicator->id];
-            $this->averages[$adjudicator->id]['4:6'] =
-                $count !== 0 ? 
-                $test_score * 0.4 + ($sum / $count) * 0.6
-                : 0;
-
-            $this->averages[$adjudicator->id]['2:8'] =
-                $count !== 0 ? 
-                $test_score * 0.2 + ($sum / $count) * 0.8
-                : 0;
-
-            $this->averages[$adjudicator->id]['ignore_test'] =
-                $count !== 0 ? 
-                $sum / $count
-                : 0;
-
-            $sum += $this->test_scores[$adjudicator->id];
-            $count++;
-
             $this->averages[$adjudicator->id]['round'] =
-                $count !== 0 ? $sum / $count : 0;
+                ($sum_score_round + $test_score) / ($n_round + 1);
 
             $fbs = Feedback::where('evaluatee_id', $adjudicator->id)->get();
-            $sum = 0; 
-            $count = 0;
+            $sum_score_fb = 0; 
+            $n_fb = 0;
             foreach ($fbs as $fb) {
-                $sum += $fb->score;
-                $count++;
-            } 
-            $sum += $this->test_scores[$adjudicator->id];
-            $count++;
+                $sum_score_fb += $fb->score;
+                $n_fb += 1;
+            }
+            $sum_score_fb += $test_score;
+            $n_fb += 1;
             $this->averages[$adjudicator->id]['feedback'] =
-                $count !== 0 ? $sum / $count : 0;
+                $n_fb !== 0 ? $sum_score_fb / $n_fb : 0;
+
+
+            $this->averages[$adjudicator->id]['4:6'] =
+                $n_round !== 0 ? 
+                $test_score * 0.4 + ($sum_score_round / $n_round) * 0.6 :
+                $test_score * 0.4;
+
+            $this->averages[$adjudicator->id]['2:8'] =
+                $n_round !== 0 ? 
+                $test_score * 0.2 + ($sum_score_round / $n_round) * 0.8 :
+                $test_score * 0.2;
+
+            $this->averages[$adjudicator->id]['ignore_test'] =
+                $n_round !== 0 ? 
+                $sum_score_round / $n_round
+                : 0;
         }
     }
 
