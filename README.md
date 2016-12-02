@@ -30,10 +30,13 @@
      - 上エラーのようにPermission deniedと表示される場合は`$ sudo chmod -R 777 bootstrap/cache`，`$ sudo chmod -R 777 storage`を実行して下さい．
 
 ## TODO
-* Deleteを押したらポップアップで確認を出す
 * XAMPP同封版にしてTabbieみたいにダウンロードのあとすぐ使えるようにしたい
-* バックアップ，リストアをアプリケーション上で出来るようにしたい
-* Tabbie, tabbycatのデータベースと連携出来るようにしたい
+
+## TODO
+* XAMPP同封版にしてTabbieみたいにダウンロードのあとすぐ使えるようにしたい
+* Tabbie, tabbycatのデータベースと連携出来るようにしたい(pythonのコード書いてやったほうが早い)
+* Done) Deleteを押したらポップアップで確認を出す
+* Done) バックアップ，リストアをアプリケーション上で出来るようにしたい
 
 ## Authors and Contact
 - Daigo Kimura(木村大吾) ([e-mail](a91381@gmail.com))
