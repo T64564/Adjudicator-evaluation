@@ -23,6 +23,7 @@ function importCsv($fileName, $modelName, $fillable, $update = false) {
 
     /*
      * 初めの行はfillableな属性名
+     * the first line must be attributes($fillable)
      */
     if (($row = fgetcsv($handle, 1000, $delimiter)) !== false) {
         for ($i = 0; $i < count($row); $i++) {
@@ -37,7 +38,7 @@ function importCsv($fileName, $modelName, $fillable, $update = false) {
     $data = [];
     $line = 2;
     $rules = config('validations.' . mb_strtolower($modelName) . 's');
-    $uniqueKeys = []; /* validationにuniqueが含まれているkey */
+    $uniqueKeys = []; /* keys that must be unique*/
 
     foreach ($rules as $key => $rule) {
         if (preg_match('/.*unique.*/', $rule)) {
