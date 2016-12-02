@@ -83,22 +83,15 @@ class Feedback extends Model {
 
         if ($request['type'] === '0') {
             if (Round::findOrFail($request['round_id'])->silent == 1) {
-                $errors[] = 'Any team may not evaluate in a silent round.';
+                $errors[] = 'Any teams may not submit in a silent round.';
             }
 
-            // ここICUTのときコメントアウトしてたけど理由覚えてない
-            // ->where('evaluatee_id', $request['evaluator_id'])
-            // を書き忘れた?
             if (Feedback::where('round_id', $request['round_id'])
                 ->where('type', 0)->whereNotIn('id', [$request['id']])
-                ->where('evaluatee_id', $request['evaluator_id'])
                 ->where('evaluator_id', $request['evaluator_id'])
                 ->exists()) {
                 $errors[] = 
-                    'This team has already submitted a feedback to '
-                    . Adjudicator::
-                    findOrFail($request['evaluatee_id'])->name
-                    . '.';
+                    'This team has already submitted.';
             }
         } else {
             if ($request['evaluator_id'] === $request['evaluatee_id']) {
