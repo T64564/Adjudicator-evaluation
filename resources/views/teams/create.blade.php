@@ -5,7 +5,7 @@
         Team
         : Create new 
         <div style="float:right">
-            {!! link_to('teams.index', 'Back', 
+            {!! link_to('teams', 'Back', 
             ['class' => 'btn btn-primary']) !!}    
         </div>
     </div>

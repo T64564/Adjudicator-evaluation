@@ -2,7 +2,7 @@
 @section('content')
 @include('errors.form_errors')
 <h1>
-    Feedback management
+    Feedback Management
 </h1>
 <hr />
 

@@ -17,9 +17,11 @@ window.onload = function() {
             {!! link_to('feedbacks/' . $round->id . '/check_bp',
             'Check BP', ['class' => 'btn btn-primary']) !!}    
             {!! link_to('feedbacks/' . $round->id . '/create_team_to_adj',
-            'Add new [ Team -> Adjudicator ]', ['class' => 'btn btn-primary']) !!}    
+            'Add New [ Team -> Adjudicator ]', 
+            ['id' => 'create_team_to_adj', 'class' => 'btn btn-primary']) !!}    
             {!! link_to('feedbacks/' . $round->id . '/create_adj_to_adj',
-            'Add new [ Adjudicator -> Adjudicator ]', ['class' => 'btn btn-primary']) !!}    
+            'Add New [ Adjudicator -> Adjudicator ]', 
+            ['id' => 'create_adj_to_adj', 'class' => 'btn btn-primary']) !!}    
         </div>
     </div>
 </h1>

@@ -11,9 +11,9 @@ window.onload = function() {
     <div style="text-align:left">
         Rounds
         <div style="float:right">
-            {!! link_to('rounds/create', 'Add new', 
+            {!! link_to('rounds/create', 'Add New', 
             ['class' => 'btn btn-primary']) !!}    
-            {!! link_to('rounds/import', 'Import .csv', 
+            {!! link_to('rounds/import', 'Import from csv',
             ['class' => 'btn btn-primary']) !!}    
         </div>
     </div>

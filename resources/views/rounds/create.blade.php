@@ -5,7 +5,7 @@
         Round
         : Create new 
         <div style="float:right">
-            {!! link_to('rounds.index', 'Back', 
+            {!! link_to('rounds', 'Back', 
             ['class' => 'btn btn-primary']) !!}    
         </div>
     </div>
