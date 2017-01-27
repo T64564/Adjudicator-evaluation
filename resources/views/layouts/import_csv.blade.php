@@ -2,12 +2,17 @@
 @section('content')
 @include('errors.form_errors')
 <h1>
-    Import
-    {{ ucfirst($parentRoot) }}
+    <div style="text-align:left">
+        Import
+        {{ ucfirst($parentRoot) }}
+        <div style="float:right">
+            {{ link_to($parentRoot, 'Back', ['class' => 'btn btn-primary']) }}    
+        </div>
+    </div>
 </h1>
 <hr/>
 @if(Session::has('success'))
-    <h3 class="success">{{ Session::get('success') }}</h3>
+<h3 class="success">{{ Session::get('success') }}</h3>
 @endif
 <div class="form-group">
     {!! Form::label('csv', 'Csv file:') !!}
