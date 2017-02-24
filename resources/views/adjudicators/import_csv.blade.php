@@ -1,1 +1,1 @@
-@include('layouts.import_csv', ['parentRoot' => 'adjudicators']);
+@include('layouts.import_csv', ['modelName' => 'adjudicators']);

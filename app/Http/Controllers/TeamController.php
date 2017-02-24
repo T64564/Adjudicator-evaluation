@@ -40,7 +40,7 @@ class TeamController extends Controller {
     public function update(Request $request) {
         $this->validateRequest($request);
         $team = Team::findOrFail($request->id);
-        
+
         $team->update($request->all());
         $name = $request->name;
 
@@ -89,6 +89,10 @@ class TeamController extends Controller {
             \Session::flash('flash_message', "File uploaded successfully.");
         }
         return view('teams.import_csv')->withErrors($errors);
+    }
+
+    public function sampleCSV() {
+        return redirect()->route('teams.import');
     }
 
     public function validateRequest($request) {

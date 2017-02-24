@@ -41,7 +41,7 @@ class AdjudicatorController extends Controller {
     public function update(Request $request) {
         $this->validateRequest($request);
         $adj = Adjudicator::findOrFail($request->id);
-        
+
         $adj->update($request->all());
         $name = $request->name;
 
@@ -86,6 +86,10 @@ class AdjudicatorController extends Controller {
         }
 
         return view('adjudicators.import_csv')->withErrors($errors);
+    }
+
+    public function sampleCSV() {
+        return redirect()->route('adjudicators.import_csv');
     }
 
     public function validateRequest($request) {

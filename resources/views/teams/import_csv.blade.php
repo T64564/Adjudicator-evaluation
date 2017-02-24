@@ -1,1 +1,1 @@
-@include('layouts.import_csv', ['parentRoot' => 'teams']);
+@include('layouts.import_csv', ['modelName' => 'teams']);

@@ -4,9 +4,10 @@
 <h1>
     <div style="text-align:left">
         Import
-        {{ ucfirst($parentRoot) }}
+        {{ ucfirst($modelName) }}
         <div style="float:right">
-            {{ link_to($parentRoot, 'Back', ['class' => 'btn btn-primary']) }}    
+            {{ link_to($modelName . '.import_csv', 'Download Sample Csv', ['class' => 'btn btn-primary']) }}
+            {{ link_to($modelName, 'Back', ['class' => 'btn btn-primary']) }}
         </div>
     </div>
 </h1>
@@ -16,14 +17,14 @@
 @endif
 <div class="form-group">
     {!! Form::label('csv', 'Csv file:') !!}
-    {!! Form::open(['route' => $parentRoot . '.import_csv', 'files' => true]) !!}
+    {!! Form::open(['route' => $modelName . '.import_csv', 'files' => true]) !!}
     {!! Form::file('csv', ['class' => 'form-control']) !!}
 </div>
 
 <div class="form-group">
     {!! Form::label('deplicatin_label', 'If name deplication found:') !!}
-    {!! Form::select('name_dep', 
-    ['igrore' => 'ignore', 'update' => 'update'], null, 
+    {!! Form::select('name_dep',
+    ['igrore' => 'ignore', 'update' => 'update'], null,
     ['class' => 'form-control']) !!}
 </div>
 <hr/>

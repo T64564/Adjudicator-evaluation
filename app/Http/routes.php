@@ -29,18 +29,24 @@ Route::get('/', function () {
 Route::group(['middleware' => ['web']], function () {
 
     Route::get('adjudicators/import_csv',
-        ['as' => 'adjudicators.import_csv', 
+        ['as' => 'adjudicators.import_csv',
         'uses' => 'AdjudicatorController@getImport']);
     Route::post('adjudicators/import_csv',
-        ['as' => 'adjudicators.import_csv', 
+        ['as' => 'adjudicators.import_csv',
         'uses' => 'AdjudicatorController@postImport']);
+    Route::get('adjudicators/sample_csv',
+        ['as' => 'adjudicators.sample_csv',
+        'uses' => 'AdjudicatorController@sampleCsv']);
 
     Route::get('teams/import_csv',
         ['as' => 'teams.import_csv',
         'uses' => 'TeamController@getImport']);
     Route::post('teams/import_csv',
-        ['as' => 'teams.import_csv', 
+        ['as' => 'teams.import_csv',
         'uses' => 'TeamController@postImport']);
+    Route::get('teams/sample_csv',
+        ['as' => 'teams.sample_csv',
+        'uses' => 'TeamController@sampleCsv']);
 
     Route::get('feedbacks/',
         ['as' => 'feedbacks.index',
@@ -92,7 +98,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('backup', ['as' => 'backup', function () {
         $db_user = env('DB_USERNAME', 'root');
         $db_pass = env('DB_PASSWORD', '');
-        $cmd = '/Applications/XAMPP/bin/mysqldump -u' 
+        $cmd = '/Applications/XAMPP/bin/mysqldump -u'
             . $db_user . ' -p' . $db_pass . ' adjudicator_evaluation';
         $output = shell_exec($cmd);
         $file_name = 'dump.sql';
@@ -119,7 +125,7 @@ Route::group(['middleware' => ['web']], function () {
 
         $db_user = env('DB_USERNAME', 'root');
         $db_pass = env('DB_PASSWORD', '');
-        $cmd = '/Applications/XAMPP/bin/mysql -u' 
+        $cmd = '/Applications/XAMPP/bin/mysql -u'
             . $db_user . ' -p' . $db_pass . ' adjudicator_evaluation < ' . $move;
         echo exec($cmd);
         return redirect()->route('restore');
