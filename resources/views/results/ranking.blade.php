@@ -4,7 +4,7 @@
 
 <script type="text/javascript">
 window.onload = function() {
-    $("#table").tablesorter(); 
+    $("#table").tablesorter();
 }
 </script>
 
@@ -13,7 +13,7 @@ window.onload = function() {
         Adjudicator Ranking
         <div style="float:right">
             {{ link_to('results/ranking/export_csv',
-            'Download csv', ['class' => 'btn btn-primary']) }}    
+            'Download Csv', ['class' => 'btn btn-primary']) }} 
         </div>
     </div>
 </h1>
@@ -36,9 +36,9 @@ window.onload = function() {
             <td>
                 {{ $rankings->test_scores[$adjudicator->id] }}
             </td>
-            @foreach ($rounds as $round) 
+            @foreach ($rounds as $round)
                 <td>
-                    <?php 
+                    <?php
                     $score = $rankings->averages[$adjudicator->id][$round->id];
                     if ($score !== null) {
                     echo round($score, 5);
@@ -53,12 +53,6 @@ window.onload = function() {
             </td>
             <td>
                 {{ round($rankings->averages[$adjudicator->id]['feedback'], 5) }}
-            </td>
-            <td>
-                {{ round($rankings->averages[$adjudicator->id]['4:6'], 5) }}
-            </td>
-            <td>
-                {{ round($rankings->averages[$adjudicator->id]['2:8'], 5) }}
             </td>
             <td>
                 {{ round($rankings->averages[$adjudicator->id]['ignore_test'], 5) }}

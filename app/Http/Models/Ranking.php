@@ -10,9 +10,9 @@ class Ranking {
 
     /**
      * adjudicator_id =>
-     *      round_id(unsiged int)    => average score of the round
-     *      'round'                  => average of average scores of each round
-     *      'feedback'               => average score of each feedback
+     *      round_id(unsiged int)  => average score of the round
+     *      round                  => average of average scores of each round
+     *      feedback               => average score of each feedback
      *
      */
     public $averages;
@@ -30,7 +30,7 @@ class Ranking {
     }
 
     private function getAverages() {
-        // if (Round::count() === 0) { 
+        // if (Round::count() === 0) {
         //     return;
         // }
 
@@ -45,7 +45,7 @@ class Ranking {
                 $this->averages[$adjudicator->id][$round->id] = $avg;
             }
 
-            $sum_score_round = 0; 
+            $sum_score_round = 0;
             $n_round = 0;
             $test_score = $this->test_scores[$adjudicator->id];
 
@@ -62,7 +62,7 @@ class Ranking {
                 ($sum_score_round + $test_score) / ($n_round + 1);
 
             $fbs = Feedback::where('evaluatee_id', $adjudicator->id)->get();
-            $sum_score_fb = 0; 
+            $sum_score_fb = 0;
             $n_fb = 0;
             foreach ($fbs as $fb) {
                 $sum_score_fb += $fb->score;
@@ -74,18 +74,8 @@ class Ranking {
                 // $n_fb !== 0 ? $sum_score_fb / $n_fb : 0;
                 $sum_score_fb / $n_fb;
 
-            $this->averages[$adjudicator->id]['4:6'] =
-                $n_round !== 0 ? 
-                $test_score * 0.4 + ($sum_score_round / $n_round) * 0.6 :
-                $test_score * 0.4;
-
-            $this->averages[$adjudicator->id]['2:8'] =
-                $n_round !== 0 ? 
-                $test_score * 0.2 + ($sum_score_round / $n_round) * 0.8 :
-                $test_score * 0.2;
-
             $this->averages[$adjudicator->id]['ignore_test'] =
-                $n_round !== 0 ? 
+                $n_round !== 0 ?
                 $sum_score_round / $n_round
                 : 0;
         }
@@ -96,15 +86,15 @@ class Ranking {
         $rounds = Round::get();
         $heads = [];
         $heads[] = 'Name';
-        $heads[] = 'Test score';
+        $heads[] = 'Test Score';
         foreach ($rounds as $round) {
-            $heads[] = $round->name . ' avg';
+            $heads[] = $round->name . ' Avg';
         }
-        $heads[] = 'Avg of each avg of round';
-        $heads[] = 'Avg of each feedback';
-        $heads[] = '(test:round) = (4:6)';
-        $heads[] = '(test:round) = (2:8)';
-        $heads[] = 'Ignore test score';
+        $heads[] = 'Avg (Round)';
+        $heads[] = 'Avg (Feedback)';
+        // $heads[] = '(test:round) = (4:6)';
+        // $heads[] = '(test:round) = (2:8)';
+        $heads[] = 'Ignore Test Score';
         return $heads;
     }
 
