@@ -4,7 +4,7 @@
 
 <script type="text/javascript">
 window.onload = function() {
-    $("#table").tablesorter(); 
+    $("#table").tablesorter();
 }
 </script>
 
@@ -12,16 +12,12 @@ window.onload = function() {
     <div style="text-align:left">
         Feedback {{ $round->name }}
         <div style="float:right">
-            {!! link_to('feedbacks/' . $round->id . '/check_asian',
-            'Check Asian', ['class' => 'btn btn-primary']) !!}    
-            {!! link_to('feedbacks/' . $round->id . '/check_bp',
-            'Check BP', ['class' => 'btn btn-primary']) !!}    
             {!! link_to('feedbacks/' . $round->id . '/create_team_to_adj',
-            'Add New [ Team -> Adjudicator ]', 
-            ['id' => 'create_team_to_adj', 'class' => 'btn btn-primary']) !!}    
+            'Add New [ Team -> Adjudicator ]',
+            ['id' => 'create_team_to_adj', 'class' => 'btn btn-primary']) !!}   
             {!! link_to('feedbacks/' . $round->id . '/create_adj_to_adj',
-            'Add New [ Adjudicator -> Adjudicator ]', 
-            ['id' => 'create_adj_to_adj', 'class' => 'btn btn-primary']) !!}    
+            'Add New [ Adjudicator -> Adjudicator ]',
+            ['id' => 'create_adj_to_adj', 'class' => 'btn btn-primary']) !!}   
         </div>
     </div>
 </h1>
@@ -30,7 +26,7 @@ window.onload = function() {
 <table id="table" class="table table-striped table-hover">
     <thead>
         <tr>
-            @foreach ($heads as $head) 
+            @foreach ($heads as $head)
                 <th>
                     {{ $head }}
                 </th>
