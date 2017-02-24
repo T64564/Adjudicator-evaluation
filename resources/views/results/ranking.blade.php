@@ -13,7 +13,7 @@ window.onload = function() {
         Adjudicator Ranking
         <div style="float:right">
             {{ link_to('results/ranking/export_csv',
-            'Download Csv', ['class' => 'btn btn-primary']) }}
+            'Download CSV', ['class' => 'btn btn-primary']) }}
         </div>
     </div>
 </h1>

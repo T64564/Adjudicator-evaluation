@@ -13,9 +13,9 @@ window.onload = function() {
         Adjudicators
         <div style="float:right">
             {{ link_to('adjudicators/create',
-            'Add New', ['class' => 'btn btn-primary']) }}  
+            'Add New', ['class' => 'btn btn-primary']) }} 
             {{ link_to('adjudicators/import_csv',
-            'Import from Csv', ['class' => 'btn btn-primary']) }}  
+            'Import from CSV', ['class' => 'btn btn-primary']) }} 
         </div>
     </div>
 </h1>

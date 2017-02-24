@@ -13,9 +13,9 @@ window.onload = function() {
         Teams
         <div style="float:right">
             {{ link_to('teams/create',
-            'Add New', ['class' => 'btn btn-primary']) }}   
+            'Add New', ['class' => 'btn btn-primary']) }}  
             {{ link_to('teams/import_csv',
-            'Import from Csv', ['class' => 'btn btn-primary']) }}   
+            'Import from CSV', ['class' => 'btn btn-primary']) }}  
         </div>
     </div>
 </h1>

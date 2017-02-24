@@ -21,7 +21,7 @@ class UITest extends TestCase {
         $this->visit('/adjudicators')->see('Adjudicators');
         $this->click('Add New')->seePageIs('/adjudicators/create');
         $this->click('Back')->seePageIs('/adjudicators');
-        $this->click('Import from csv')->seePageIs('/adjudicators/import_csv');
+        $this->click('Import from CSV')->seePageIs('/adjudicators/import_csv');
         $this->click('Back')->seePageIs('/adjudicators');
         $this->click('Edit')->seePageIs('/adjudicators/1/edit');
         $this->click('Back')->seePageIs('/adjudicators');
@@ -36,7 +36,7 @@ class UITest extends TestCase {
         $this->visit('/teams')->see('Teams');
         $this->click('Add New')->seePageIs('/teams/create');
         $this->click('Back')->seePageIs('/teams');
-        $this->click('Import from csv')->seePageIs('/teams/import_csv');
+        $this->click('Import from CSV')->seePageIs('/teams/import_csv');
         $this->click('Back')->seePageIs('/teams');
         $this->click('Edit')->seePageIs('/teams/1/edit/');
         $this->click('Back')->seePageIs('/teams');
