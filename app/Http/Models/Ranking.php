@@ -30,10 +30,6 @@ class Ranking {
     }
 
     private function getAverages() {
-        // if (Round::count() === 0) {
-        //     return;
-        // }
-
         $adjudicators = Adjudicator::where('active', 1)->get();
         $rounds = Round::get();
 
@@ -73,11 +69,6 @@ class Ranking {
             $this->averages[$adjudicator->id]['feedback'] =
                 // $n_fb !== 0 ? $sum_score_fb / $n_fb : 0;
                 $sum_score_fb / $n_fb;
-
-            $this->averages[$adjudicator->id]['ignore_test'] =
-                $n_round !== 0 ?
-                $sum_score_round / $n_round
-                : 0;
         }
     }
 

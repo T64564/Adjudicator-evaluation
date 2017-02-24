@@ -13,7 +13,7 @@ window.onload = function() {
         Adjudicator Ranking
         <div style="float:right">
             {{ link_to('results/ranking/export_csv',
-            'Download Csv', ['class' => 'btn btn-primary']) }} 
+            'Download Csv', ['class' => 'btn btn-primary']) }}
         </div>
     </div>
 </h1>
@@ -53,9 +53,6 @@ window.onload = function() {
             </td>
             <td>
                 {{ round($rankings->averages[$adjudicator->id]['feedback'], 5) }}
-            </td>
-            <td>
-                {{ round($rankings->averages[$adjudicator->id]['ignore_test'], 5) }}
             </td>
         </tr>
     @endforeach
