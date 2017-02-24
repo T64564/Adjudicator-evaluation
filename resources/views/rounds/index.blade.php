@@ -3,7 +3,7 @@
 
 <script type="text/javascript">
 window.onload = function() {
-    $("#table").tablesorter(); 
+    $("#table").tablesorter();
 }
 </script>
 
@@ -11,10 +11,10 @@ window.onload = function() {
     <div style="text-align:left">
         Rounds
         <div style="float:right">
-            {!! link_to('rounds/create', 'Add New', 
-            ['class' => 'btn btn-primary']) !!}    
-            {!! link_to('rounds/import', 'Import from csv',
-            ['class' => 'btn btn-primary']) !!}    
+            {!! link_to('rounds/create', 'Add New',
+            ['class' => 'btn btn-primary']) !!}   
+            {!! link_to('rounds/import', 'Import from Csv',
+            ['class' => 'btn btn-primary']) !!}   
         </div>
     </div>
 </h1>
@@ -22,7 +22,7 @@ window.onload = function() {
 <table id="table" class="table table-striped table-hover">
     <thead>
         <tr>
-            @foreach ($heads as $head) 
+            @foreach ($heads as $head)
                 <th>
                     {{ $head }}
                 </th>
@@ -45,11 +45,11 @@ window.onload = function() {
                 @endif
             </td>
             <td>
-                {{ link_to('rounds/' . $round->id . '/edit', 
+                {{ link_to('rounds/' . $round->id . '/edit',
                 'Edit', ['class' => 'btn btn-primary']) }}
             </td>
             <td>
-                {{ Form::open(['method' => 'DELETE', 
+                {{ Form::open(['method' => 'DELETE',
                 'url' => ['rounds', $round->id],
                 'onsubmit' => 'return confirmDelete()']) }}
                 {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}

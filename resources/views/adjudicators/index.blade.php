@@ -4,7 +4,7 @@
 
 <script type="text/javascript">
 window.onload = function() {
-    $("#table").tablesorter(); 
+    $("#table").tablesorter();
 }
 </script>
 
@@ -13,9 +13,9 @@ window.onload = function() {
         Adjudicators
         <div style="float:right">
             {{ link_to('adjudicators/create',
-            'Add New', ['class' => 'btn btn-primary']) }}    
+            'Add New', ['class' => 'btn btn-primary']) }}  
             {{ link_to('adjudicators/import_csv',
-            'Import from csv', ['class' => 'btn btn-primary']) }}    
+            'Import from Csv', ['class' => 'btn btn-primary']) }}  
         </div>
     </div>
 </h1>
@@ -24,7 +24,7 @@ window.onload = function() {
 <table id="table" class="table table-striped table-hover">
     <thead>
         <tr>
-            @foreach ($heads as $head) 
+            @foreach ($heads as $head)
                 <th>
                     {{ $head }}
                 </th>
@@ -50,11 +50,11 @@ window.onload = function() {
                 @endif
             </td>
             <td>
-                {{ link_to('adjudicators/' . $adj->id . '/edit', 
+                {{ link_to('adjudicators/' . $adj->id . '/edit',
                 'Edit', ['class' => 'btn btn-primary']) }}
             </td>
             <td>
-                {{ Form::open(['method' => 'DELETE', 
+                {{ Form::open(['method' => 'DELETE',
                     'url' => ['adjudicators', $adj->id],
                 'onsubmit' => 'return confirmDelete()']) }}
                 {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}

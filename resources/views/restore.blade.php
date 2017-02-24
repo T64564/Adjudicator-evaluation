@@ -9,7 +9,7 @@
     <h3 class="success">{{ Session::get('success') }}</h3>
 @endif
 <div class="form-group">
-    {!! Form::label('sql ', 'sql file:') !!}
+    {!! Form::label('sql ', 'Choose SQL File:') !!}
     {!! Form::open(['route' => 'restore', 'files' => true]) !!}
     {!! Form::file('sql', ['class' => 'form-control']) !!}
 </div>

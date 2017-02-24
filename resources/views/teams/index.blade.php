@@ -4,18 +4,18 @@
 
 <script type="text/javascript">
 window.onload = function() {
-    $("#table").tablesorter(); 
+    $("#table").tablesorter();
 }
 </script>
 
 <h1>
     <div style="text-align:left">
-        Teams 
+        Teams
         <div style="float:right">
             {{ link_to('teams/create',
-            'Add New', ['class' => 'btn btn-primary']) }}    
-            {{ link_to('teams/import_csv', 
-            'Import from csv', ['class' => 'btn btn-primary']) }}    
+            'Add New', ['class' => 'btn btn-primary']) }}   
+            {{ link_to('teams/import_csv',
+            'Import from Csv', ['class' => 'btn btn-primary']) }}   
         </div>
     </div>
 </h1>
@@ -24,7 +24,7 @@ window.onload = function() {
 <table id="table" class="table table-striped table-hover">
     <thead>
         <tr>
-            @foreach ($heads as $head) 
+            @foreach ($heads as $head)
                 <th>
                     {{ $head }}
                 </th>
@@ -47,11 +47,11 @@ window.onload = function() {
                 @endif
             </td>
             <td>
-                {{ link_to('teams/' . $team->id . '/edit', 
+                {{ link_to('teams/' . $team->id . '/edit',
                 'Edit', ['class' => 'btn btn-primary']) }}
             </td>
             <td>
-                {{ Form::open(['method' => 'DELETE', 
+                {{ Form::open(['method' => 'DELETE',
                     'url' => ['teams', $team->id],
                 'onsubmit' => 'return confirmDelete()']) }}
                 {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
