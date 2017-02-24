@@ -7,14 +7,6 @@ namespace App\Http\Models;
  */
 class Ranking {
     public $test_scores;
-
-    /**
-     * adjudicator_id =>
-     *      round_id(unsiged int)  => average score of the round
-     *      round                  => average of average scores of each round
-     *      feedback               => average score of each feedback
-     *
-     */
     public $averages;
 
     public function __construct() {
@@ -67,7 +59,6 @@ class Ranking {
             $sum_score_fb += $test_score;
             $n_fb += 1;
             $this->averages[$adjudicator->id]['feedback'] =
-                // $n_fb !== 0 ? $sum_score_fb / $n_fb : 0;
                 $sum_score_fb / $n_fb;
         }
     }
@@ -83,9 +74,6 @@ class Ranking {
         }
         $heads[] = 'Avg (Round)';
         $heads[] = 'Avg (Feedback)';
-        // $heads[] = '(test:round) = (4:6)';
-        // $heads[] = '(test:round) = (2:8)';
-        $heads[] = 'Ignore Test Score';
         return $heads;
     }
 

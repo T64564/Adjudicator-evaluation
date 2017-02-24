@@ -15,20 +15,17 @@ function importCsv($fileName, $modelName, $fillable, $update = false) {
         return $errors;
     }
 
-    $data = [];
-
     if (($handle = fopen($fileName, 'r')) === false) {
         return false;
-    } 
+    }
 
     /*
-     * 初めの行はfillableな属性名
-     * the first line must be attributes($fillable)
+     * The first line must be attributes($fillable)
      */
     if (($row = fgetcsv($handle, 1000, $delimiter)) !== false) {
         for ($i = 0; $i < count($row); $i++) {
             if ($row[$i] !== $fillable[$i]) {
-                $errors[] = 'The first line must be ' 
+                $errors[] = 'The first line must be '
                     . implode($fillable, ', ') . '.';
                 return $errors;
             }
@@ -38,7 +35,7 @@ function importCsv($fileName, $modelName, $fillable, $update = false) {
     $data = [];
     $line = 2;
     $rules = config('validations.' . mb_strtolower($modelName) . 's');
-    $uniqueKeys = []; /* keys that must be unique*/
+    $uniqueKeys = [];
 
     foreach ($rules as $key => $rule) {
         if (preg_match('/.*unique.*/', $rule)) {
@@ -49,8 +46,8 @@ function importCsv($fileName, $modelName, $fillable, $update = false) {
         }
     }
 
-    /* 
-     * validation 
+    /*
+     * Validation
      */
     while (($row = fgetcsv($handle, 1000, $delimiter)) !== false) {
         $new = array_combine($fillable, $row);
@@ -66,7 +63,7 @@ function importCsv($fileName, $modelName, $fillable, $update = false) {
             foreach ($uniqueKeys as $u) {
                 foreach ($data as $d) {
                     if ($d[$u] === $new[$u]) {
-                        $errors[] = 
+                        $errors[] =
                             "The $u ($new[$u]) has already been taken.  (on line $line.)";
                         $canInsert = false;
                     }
@@ -82,7 +79,7 @@ function importCsv($fileName, $modelName, $fillable, $update = false) {
     fclose($handle);
 
     /*
-     * Insert
+     * Insertion
      */
     $modelName = 'App\\Http\\Models\\' . $modelName;
     if ($update) {
