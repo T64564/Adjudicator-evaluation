@@ -1,6 +1,7 @@
 <?php
 
-function importCsv($fileName, $modelName, $fillable, $update = false) {
+function importCsv($fileName, $modelName, $fillable, $update = false)
+{
     $fileName = storage_path() . '/upload/' . $fileName;
     $delimiter = ',';
     $errors = [];

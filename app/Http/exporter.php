@@ -1,5 +1,6 @@
 <?php
-function exportRankingCsv($list, $heads, $file_name) {
+function exportRankingCsv($list, $heads, $file_name)
+{
     $stream = fopen('php://temp', 'r+b');
     if (!empty($heads)) {
         fputcsv($stream, $heads);

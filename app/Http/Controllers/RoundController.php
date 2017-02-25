@@ -8,19 +8,22 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Models\Round;
 
-class RoundController extends Controller {
-
-    public function index() {
+class RoundController extends Controller
+{
+    public function index()
+    {
         $heads = Round::getTableHeader();
         $rounds = Round::get();
         return view('rounds.index', compact('heads', 'rounds'));
     }
 
-    public function create() {
+    public function create()
+    {
         return view('rounds.create');
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $this->validateRequest($request);
         Round::create($request->all());
         $name = $request->name;
@@ -29,11 +32,13 @@ class RoundController extends Controller {
         return redirect()->route('rounds.index');
     }
 
-    public function edit(Round $round) {
+    public function edit(Round $round)
+    {
         return view('rounds.edit', compact('round'));
     }
 
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         $this->validateRequest($request);
         $round = Round::findOrFail($request->id);
         
@@ -44,7 +49,8 @@ class RoundController extends Controller {
         return redirect()->route('rounds.index');
     }
 
-    public function destroy(Round $round) {
+    public function destroy(Round $round)
+    {
         $name = $round->name;
         $round->delete();
 
@@ -52,7 +58,8 @@ class RoundController extends Controller {
         return redirect()->route('rounds.index');
     }
 
-    public function validateRequest($request) {
+    public function validateRequest($request)
+    {
         $id = ($request->has('id')) ? ',' . $request->input('id') : '';
         $rules = config('validations.rounds');
 

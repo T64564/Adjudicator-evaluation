@@ -27,7 +27,6 @@ Route::get('/', function () {
  */
 
 Route::group(['middleware' => ['web']], function () {
-
     Route::get('adjudicators/import_csv',
         ['as' => 'adjudicators.import_csv',
         'uses' => 'AdjudicatorController@getImport']);

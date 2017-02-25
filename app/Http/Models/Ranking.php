@@ -5,23 +5,27 @@ namespace App\Http\Models;
 /*
  * Feedback Score Ranking
  */
-class Ranking {
+class Ranking
+{
     public $test_scores;
     public $averages;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->getTestScores();
         $this->getAverages();
     }
 
-    private function getTestScores() {
+    private function getTestScores()
+    {
         $adjudicators = Adjudicator::where('active', 1)->get();
         foreach ($adjudicators as $adjudicator) {
             $this->test_scores[$adjudicator->id] = $adjudicator->test_score;
         }
     }
 
-    private function getAverages() {
+    private function getAverages()
+    {
         $adjudicators = Adjudicator::where('active', 1)->get();
         $rounds = Round::get();
 
@@ -64,7 +68,8 @@ class Ranking {
     }
 
 
-    public function getTableHeader() {
+    public function getTableHeader()
+    {
         $rounds = Round::get();
         $heads = [];
         $heads[] = 'Name';
@@ -86,7 +91,8 @@ class Ranking {
      * Avg2
      *
      */
-    public function getListForCsvExport() {
+    public function getListForCsvExport()
+    {
         $rankings = new Ranking();
         $adjudicators = Adjudicator::where('active', 1)->get();
         $rounds = Round::get();

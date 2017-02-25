@@ -4,10 +4,12 @@ namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Adjudicator extends Model {
+class Adjudicator extends Model
+{
     protected $fillable = ['name', 'test_score', 'active'];
 
-    public static function getTableHeader() {
+    public static function getTableHeader()
+    {
         $tableHeader = ['Id', 'Name', 'Test score', 'Active', 'Edit', 'Delete'];
         return $tableHeader;
     }
@@ -15,7 +17,8 @@ class Adjudicator extends Model {
     /*
      * id => name
      */
-    public static function getNamesForSelectbox() {
+    public static function getNamesForSelectbox()
+    {
         $names = [];
         $adjs = Adjudicator::where('active', 1)->orderBy('name')->get();
 

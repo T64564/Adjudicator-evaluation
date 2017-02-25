@@ -4,10 +4,12 @@ namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Team extends Model {
+class Team extends Model
+{
     protected $fillable = ['name', 'active'];
 
-    public static function getTableHeader() {
+    public static function getTableHeader()
+    {
         $tableHeader = ['Id', 'Name', 'Active', 'Edit', 'Delete'];
         return $tableHeader;
     }
@@ -15,7 +17,8 @@ class Team extends Model {
     /*
      * id => name
      */
-    public static function getNamesForSelectbox() {
+    public static function getNamesForSelectbox()
+    {
         $names = [];
         $teams = Team::where('active', 1)->orderBy('name')->get();
 
@@ -25,7 +28,8 @@ class Team extends Model {
         return $names;
     }
 
-    public function delete() {
+    public function delete()
+    {
         $fbs = Feedback::get();
         if ($fbs->where('type', 0)
             ->contains('evaluator_id', $this->id)) {

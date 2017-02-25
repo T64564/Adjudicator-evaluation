@@ -4,9 +4,10 @@ namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Feedback extends Model {
+class Feedback extends Model
+{
     protected $fillable = [
-        'type', 'round_id', 
+        'type', 'round_id',
         'evaluatee_id', 'evaluator_id', 'score'
     ];
 
@@ -21,23 +22,27 @@ class Feedback extends Model {
     public $evaluatee_name;
     public $evaluator_name;
 
-    public static function getTypes() {
+    public static function getTypes()
+    {
         $feedback = new Feedback();
         return $feedback->types;
     }
 
-    public static function getTypeName($type) {
+    public static function getTypeName($type)
+    {
         $feedback = new Feedback();
         return $feedback->types[$type];
     }
 
-    public static function getTableHeader() {
-        $tableHeader = 
+    public static function getTableHeader()
+    {
+        $tableHeader =
             ['Id', 'Type', 'Evaluator', 'Evaluatee', 'Score', 'Edit', 'Delete'];
         return $tableHeader;
     }
 
-    public static function getListing($round_id) {
+    public static function getListing($round_id)
+    {
         $feedbacks = Feedback::where('round_id', $round_id)
             ->orderBy('id', 'desc')->get();
 
@@ -45,14 +50,14 @@ class Feedback extends Model {
             $feedback->type_name = $feedback->getTypeName($feedback->type);
             if ($feedback->type === 0) {
                 /* evaluator is team */
-                $feedback->evaluator_name = 
+                $feedback->evaluator_name =
                     Team::findOrFail($feedback->evaluator_id)->name;
             } else {
                 /* evaluator is adjudicator */
-                $feedback->evaluator_name = 
+                $feedback->evaluator_name =
                     Adjudicator::findOrFail($feedback->evaluator_id)->name;
             }
-            $feedback->evaluatee_name = 
+            $feedback->evaluatee_name =
                 Adjudicator::findOrFail($feedback->evaluatee_id)->name;
         }
         return $feedbacks;
@@ -67,7 +72,8 @@ class Feedback extends Model {
      * - combination (type, evaluator_id, evaluatee_id) is unique
      *
      */
-    public static function validateRequest($request) {
+    public static function validateRequest($request)
+    {
         $errors = [];
 
         $score_rule = config('validations.feedbacks.score');
@@ -77,8 +83,8 @@ class Feedback extends Model {
             ['/.*between:[0-9]*,/', '/\|.*/'], ['', ''], $score_rule);
         $max_score = (float)preg_replace('/\|.*/', '', $max_score);
         if ($request['score'] < $min_score || $max_score < $request['score']) {
-            $errors[] = 
-                'Score must be between ' . $min_score . ' and ' . $max_score; 
+            $errors[] =
+                'Score must be between ' . $min_score . ' and ' . $max_score;
         }
 
         if ($request['type'] === '0') {
@@ -90,7 +96,7 @@ class Feedback extends Model {
                 ->where('type', 0)->whereNotIn('id', [$request['id']])
                 ->where('evaluator_id', $request['evaluator_id'])
                 ->exists()) {
-                $errors[] = 
+                $errors[] =
                     'This team has already submitted.';
             }
         } else {
@@ -103,10 +109,10 @@ class Feedback extends Model {
                 ->where('evaluatee_id', $request['evaluatee_id'])
                 ->where('evaluator_id', $request['evaluator_id'])
                 ->exists()) {
-                $errors[] = 
-                    Adjudicator::findOrFail($request['evaluator_id'])->name 
+                $errors[] =
+                    Adjudicator::findOrFail($request['evaluator_id'])->name
                     . ' has already submitted a feedback to '
-                    . Adjudicator::findOrFail($request['evaluatee_id'])->name 
+                    . Adjudicator::findOrFail($request['evaluatee_id'])->name
                     . '.';
             }
         }
@@ -116,7 +122,7 @@ class Feedback extends Model {
 
     /*
      * Check if
-     * - teams that don't submit 
+     * - teams that don't submit
      * - teams that submit in a silent round.
      * - adjudicators that don't evaluate or isn't evaluated in non-silent round.
      * - chairs that submit odd feedbacks to panelist.
@@ -130,9 +136,10 @@ class Feedback extends Model {
      * - trainees that evaluate.
      *
      * infomation
-     * - 
+     * -
      */
-    public static function checkConsistencyAsian($round_id, &$info, &$warning, &$errors) {
+    public static function checkConsistencyAsian($round_id, &$info, &$warning, &$errors)
+    {
         $info = [];
         $errors = [];
         $adjs = Adjudicator::where('active', 1)->get();
@@ -144,16 +151,16 @@ class Feedback extends Model {
             if ($round->silent == 0) {
                 $count = $fbs->where('type', 0)->where('evaluator_id', $team->id)->count();
                 if ($count == 0) {
-                    $errors[] = $team->name 
+                    $errors[] = $team->name
                         . ' doesn\'t evaluate anyone.';
                 }
                 if ($count > 1) {
-                    $errors[] = $team->name 
+                    $errors[] = $team->name
                         . ' evaluate ' . $count . ' times.';
                 }
             } else {
                 if ($fbs->where('type', 0)->contains('evaluator_id', $team->id)) {
-                    $errors[] = $team->name 
+                    $errors[] = $team->name
                         . ' may not evaluate anyone in a silent round.';
                 }
             }
@@ -164,13 +171,13 @@ class Feedback extends Model {
                 if (!$fbs->contains('evaluatee_id', $adj->id)
                     && !$fbs->whereIn('type', [1, 2, 3])
                     ->contains('evaluator_id', $adj->id)) {
-                    $errors[] = $adj->name 
+                    $errors[] = $adj->name
                         . ' doesn\'t evaluate and isn\'t evaluated by anyone.';
                 }
 
-                $evaluated_count = 
+                $evaluated_count =
                     $fbs->where('type', 0)->where('evaluatee_id', $adj->id)
-                    ->count(); 
+                    ->count();
 
                 if ($evaluated_count !== 0) {
                     $info[] = $adj->name
@@ -179,10 +186,10 @@ class Feedback extends Model {
                         . ' times by teams.';
                 }
             } else {
-                $evaluated_count = 
+                $evaluated_count =
                     $fbs->whereIn('type', [1, 2, 3])
                     ->where('evaluatee_id', $adj->id)
-                    ->count(); 
+                    ->count();
                 if ($evaluated_count === 0) {
                     $info[] = $adj->name
                         . ' isn\'t evaluated by anyone.';
@@ -197,7 +204,7 @@ class Feedback extends Model {
                 ->where('evaluator_id', $fb->evaluator_id)
                 ->count();
             if ($submit_count % 2 !== 0) {
-                $errors[] = 'Chair (' 
+                $errors[] = 'Chair ('
                     . Adjudicator::findOrFail($fb->evaluator_id)->name
                     . ') submits feedbacks to panelists odd number ('
                     . $submit_count
@@ -206,7 +213,7 @@ class Feedback extends Model {
 
             if ($fbs->whereIn('type', [1, 3])
                 ->contains('evaluator_id', $fb->evaluatee_id)) {
-                $errors[] = 'Chair (' 
+                $errors[] = 'Chair ('
                     . Adjudicator::findOrFail($fb->evaluator_id)->name
                     . ') submits feedbacks to another chair panel ('
                     . Adjudicator::findOrFail($fb->evaluatee_id)->name
@@ -215,43 +222,42 @@ class Feedback extends Model {
 
             if ($fbs->where('type', 2)
                 ->contains('evaluator_id', $fb->evaluator_id)) {
-                $errors[] = 'Chair (' 
+                $errors[] = 'Chair ('
                     . Adjudicator::findOrFail($fb->evaluator_id)->name
                     . ') evaluate '
                     . Adjudicator::findOrFail($fb->evaluatee_id)->name
                     . ' as a panelist.';
             }
 
-            if ($fb->type === 1 
+            if ($fb->type === 1
                 && !$fbs->where('type', 2)
                 ->contains('evaluator_id', $fb->evaluatee_id)) {
                 \Debugbar::info($fb);
                 \Debugbar::info($fbs->where('type', 2));
-                $chair_name = 
+                $chair_name =
                     Adjudicator::findOrFail($fb->evaluator_id)->name;
                 $panel_name =
                     Adjudicator::findOrFail($fb->evaluatee_id)->name;
-                $errors[] = 'Chair (' 
-                    . $chair_name 
+                $errors[] = 'Chair ('
+                    . $chair_name
                     . ') evaluate panelist ('
-                    . $panel_name 
+                    . $panel_name
                     . '), but the panelist hasn\'t evaluate the chair.';
             }
 
             if ($fb->type === 3 &&
                 $fbs->whereIn('type', [1, 2, 3])
                 ->contains('evaluator_id', $fb->evaluatee_id)) {
-                $chair_name = 
+                $chair_name =
                     Adjudicator::findOrFail($fb->evaluator_id)->name;
                 $trainee_name =
                     Adjudicator::findOrFail($fb->evaluatee_id)->name;
-                $errors[] = 'Chair (' 
-                    . $chair_name 
+                $errors[] = 'Chair ('
+                    . $chair_name
                     . ') evaluate trainee('
-                    . $trainee_name 
+                    . $trainee_name
                     . '), but the trainee evaluate an adjudicator.';
             }
-
         }
 
         $fbs_by_panel = $fbs->where('type', 2);
@@ -259,14 +265,14 @@ class Feedback extends Model {
             if ($fbs->where('type', 2)
                 ->where('evaluator_id', $fb->evaluator_id)
                 ->count() > 1) {
-                $errors[] = 'Panelist (' 
+                $errors[] = 'Panelist ('
                     . Adjudicator::findOrFail($fb->evaluator_id)->name
                     . ') submits feedbacks more than once.';
             }
 
             if ($fbs->where('type', 2)
                 ->contains('evaluator_id', $fb->evaluatee_id)) {
-                $errors[] = 'Panelist (' 
+                $errors[] = 'Panelist ('
                     . Adjudicator::findOrFail($fb->evaluator_id)->name
                     . ') submits feedbacks to another panelist ('
                     . Adjudicator::findOrFail($fb->evaluatee_id)->name
@@ -275,7 +281,7 @@ class Feedback extends Model {
 
             if ($fbs->whereIn('type', [1, 3])
                 ->contains('evaluator_id', $fb->evaluator_id)) {
-                $errors[] = 'Panelist (' 
+                $errors[] = 'Panelist ('
                     . Adjudicator::findOrFail($fb->evaluator_id)->name
                     . ') evaluate '
                     . Adjudicator::findOrFail($fb->evaluatee_id)->name
@@ -286,18 +292,19 @@ class Feedback extends Model {
                 ->contains('evaluator_id', $fb->evaluatee_id)) {
                 $panel_name =
                     Adjudicator::findOrFail($fb->evaluator_id)->name;
-                $chair_name = 
+                $chair_name =
                     Adjudicator::findOrFail($fb->evaluatee_id)->name;
-                $errors[] = 'Panelist (' 
-                    . $panel_name 
+                $errors[] = 'Panelist ('
+                    . $panel_name
                     . ') evaluate chair ('
-                    . $chair_name 
+                    . $chair_name
                     . '), but the chair hasn\'t evaluate the panelist.';
             }
         }
     }
 
-    public static function checkConsistencyBp($round_id, &$info, &$warning, &$errors) {
+    public static function checkConsistencyBp($round_id, &$info, &$warning, &$errors)
+    {
         return Feedback::checkConsistencyAsian($round_id, $info, $warning, $errors);
     }
 }

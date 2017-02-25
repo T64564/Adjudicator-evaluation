@@ -8,24 +8,28 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Models\Adjudicator;
 
-class AdjudicatorController extends Controller {
-
-    public function index() {
+class AdjudicatorController extends Controller
+{
+    public function index()
+    {
         $heads = Adjudicator::getTableHeader();
         $adjs = Adjudicator::get();
         $rules = config('validations.adjudicators');
         return view('adjudicators.index', compact('heads', 'adjs'));
     }
 
-    public function show() {
+    public function show()
+    {
         return 'show';
     }
 
-    public function create() {
+    public function create()
+    {
         return view('adjudicators.create');
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $this->validateRequest($request);
         Adjudicator::create($request->all());
         $name = $request->name;
@@ -34,11 +38,13 @@ class AdjudicatorController extends Controller {
         return redirect()->route('adjudicators.index');
     }
 
-    public function edit(Adjudicator $adj) {
+    public function edit(Adjudicator $adj)
+    {
         return view('adjudicators.edit', compact('adj'));
     }
 
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         $this->validateRequest($request);
         $adj = Adjudicator::findOrFail($request->id);
 
@@ -49,7 +55,8 @@ class AdjudicatorController extends Controller {
         return redirect()->route('adjudicators.index');
     }
 
-    public function destroy(Adjudicator $adj) {
+    public function destroy(Adjudicator $adj)
+    {
         $name = $adj->name;
         $adj->delete();
 
@@ -57,11 +64,13 @@ class AdjudicatorController extends Controller {
         return redirect()->route('adjudicators.index');
     }
 
-    public function getImport() {
+    public function getImport()
+    {
         return view('adjudicators.import_csv');
     }
 
-    public function postImport() {
+    public function postImport()
+    {
         $file = \Input::file('csv');
         if (!isset($file)) {
             \Session::flash('flash_danger', "Specify a file.");
@@ -88,7 +97,8 @@ class AdjudicatorController extends Controller {
         return view('adjudicators.import_csv')->withErrors($errors);
     }
 
-    public function sampleCSV() {
+    public function sampleCSV()
+    {
         $heads = ['name', 'test_score', 'active'];
         $list = [
           ['Sample1', '10', '1'],
@@ -99,7 +109,8 @@ class AdjudicatorController extends Controller {
         return exportRankingCsv($list, $heads, 'sample.adjudicator.csv');
     }
 
-    public function validateRequest($request) {
+    public function validateRequest($request)
+    {
         $id = ($request->has('id')) ? ',' . $request->input('id') : '';
         $rules = [
             'name' => 'required|unique:adjudicators,name',

@@ -8,23 +8,27 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Models\Team;
 
-class TeamController extends Controller {
-
-    public function index() {
+class TeamController extends Controller
+{
+    public function index()
+    {
         $heads = Team::getTableHeader();
         $teams = Team::get();
         return view('teams.index', compact('heads', 'teams'));
     }
 
-    public function show() {
+    public function show()
+    {
         return 'show';
     }
 
-    public function create() {
+    public function create()
+    {
         return view('teams.create');
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $this->validateRequest($request);
         Team::create($request->all());
         $name = $request->name;
@@ -33,11 +37,13 @@ class TeamController extends Controller {
         return redirect()->route('teams.index');
     }
 
-    public function edit(Team $team) {
+    public function edit(Team $team)
+    {
         return view('teams.edit', compact('team'));
     }
 
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         $this->validateRequest($request);
         $team = Team::findOrFail($request->id);
 
@@ -48,7 +54,8 @@ class TeamController extends Controller {
         return redirect()->route('teams.index');
     }
 
-    public function destroy(Team $team) {
+    public function destroy(Team $team)
+    {
         $name = $team->name;
         $success = $team->delete();
 
@@ -61,11 +68,13 @@ class TeamController extends Controller {
         return redirect()->route('teams.index');
     }
 
-    public function getImport() {
+    public function getImport()
+    {
         return view('teams.import_csv');
     }
 
-    public function postImport() {
+    public function postImport()
+    {
         $file = \Input::file('csv');
         if (!isset($file)) {
             \Session::flash('flash_danger', "Please specify a file.");
@@ -91,7 +100,8 @@ class TeamController extends Controller {
         return view('teams.import_csv')->withErrors($errors);
     }
 
-    public function sampleCSV() {
+    public function sampleCSV()
+    {
         $heads = ['name', 'active'];
         $list = [
           ['Sample1', '1'],
@@ -102,7 +112,8 @@ class TeamController extends Controller {
         return exportRankingCsv($list, $heads, 'sample.team.csv');
     }
 
-    public function validateRequest($request) {
+    public function validateRequest($request)
+    {
         $id = ($request->has('id')) ? ',' . $request->input('id') : '';
         $rules = config('validations.teams');
 

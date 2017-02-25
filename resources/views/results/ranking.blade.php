@@ -41,9 +41,9 @@ window.onload = function() {
                     <?php
                     $score = $rankings->averages[$adjudicator->id][$round->id];
                     if ($score !== null) {
-                    echo round($score, 5);
+                        echo round($score, 5);
                     } else {
-                    echo 'N/a';
+                        echo 'N/a';
                     }
                     ?>
                 </td>

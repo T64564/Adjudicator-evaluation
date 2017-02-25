@@ -11,13 +11,15 @@ use App\Http\Models\Ranking;
 use App\Http\Models\Round;
 use App\Http\Models\Team;
 
-class ResultController extends Controller {
-
-    public function index() {
+class ResultController extends Controller
+{
+    public function index()
+    {
         $this->ranking();
     }
 
-    public function ranking() {
+    public function ranking()
+    {
         $rounds = Round::get();
         $adjudicators = Adjudicator::where('active', 1)->get();
         $rankings = new Ranking();
@@ -27,7 +29,8 @@ class ResultController extends Controller {
             compact('adjudicators', 'heads', 'rankings', 'rounds'));
     }
 
-    public function getExport() {
+    public function getExport()
+    {
         $rankings = new Ranking();
         $heads = $rankings->getTableHeader();
         $list = $rankings->getListForCsvExport();
