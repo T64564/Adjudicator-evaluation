@@ -89,7 +89,14 @@ class AdjudicatorController extends Controller {
     }
 
     public function sampleCSV() {
-        return redirect()->route('adjudicators.import_csv');
+        $heads = ['name', 'test_score', 'active'];
+        $list = [
+          ['Sample1', '10', '1'],
+          ['Sample2', '8', '1'],
+          ['Sample3', '5', '1'],
+          ['Sample4', '9', '0'],
+        ];
+        return exportRankingCsv($list, $heads, 'sample.adjudicator.csv');
     }
 
     public function validateRequest($request) {

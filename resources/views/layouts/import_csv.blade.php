@@ -6,7 +6,7 @@
         Import
         {{ ucfirst($modelName) }}
         <div style="float:right">
-            {{ link_to($modelName . '.import_csv', 'Download Sample CSV', ['class' => 'btn btn-primary']) }}
+            {{ link_to($modelName . '/sample_csv', 'Download Sample CSV', ['class' => 'btn btn-primary']) }}
             {{ link_to($modelName, 'Back', ['class' => 'btn btn-primary']) }}
         </div>
     </div>

@@ -92,7 +92,14 @@ class TeamController extends Controller {
     }
 
     public function sampleCSV() {
-        return redirect()->route('teams.import');
+        $heads = ['name', 'active'];
+        $list = [
+          ['Sample1', '1'],
+          ['Sample2', '1'],
+          ['Sample3', '1'],
+          ['Sample4', '1'],
+        ];
+        return exportRankingCsv($list, $heads, 'sample.team.csv');
     }
 
     public function validateRequest($request) {
